@@ -1,0 +1,1240 @@
+<!doctype html>
+<html lang="th"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260903-03-1632ed8","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/9e99ecf74af2a081.telemetry_sdk.js" integrity="sha512-tZ7fmfTx2KpCLjXQnEuL9azQ4A5+7+xumsx6r/WYVD0zCP/8LP8hDeCypMQesmP+WyAew4g7l5Ah23Bjd6yoVg=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบจองตั๋วชมโขนไทย</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/fbe2ebfd64647c54.data_sdk.js" integrity="sha512-vkTX6CfvpHc3WbjK+tFJCaDuw4ERA4aEV/e5/7+MMJPMTF4RJYCI6CAwJBT/gtDW+dba4uLSsPUgDjVDHWtgUQ=="></script>
+  <style>
+    :root {
+      --ink: #080806;
+      --black: #11110d;
+      --paper: #fff5d5;
+      --gold: #d5a83d;
+      --gold-soft: #f8d77a;
+      --gold-muted: #8d6b20;
+      --red-seat: #9f2630;
+      --red-seat-hover: #ca3643;
+      --booked: #2f7d59;
+      --purple: #8e58bf;
+      --green-zone: #49a978;
+      --yellow: #e86f8a;
+      --glass: rgba(26, 23, 13, .76);
+      --line: rgba(232, 192, 91, .3);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: "Sarabun", Tahoma, "Leelawadee UI", sans-serif;
+    }
+
+    .khon-page {
+      width: 100%;
+      min-height: calc(100 * min(var(--vh, 1vh), 1vh));
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 50% -8%, rgba(207, 158, 45, .24), transparent 34rem),
+        radial-gradient(ellipse at 6% 24%, rgba(131, 44, 39, .16), transparent 24rem),
+        linear-gradient(180deg, #16150e 0%, #070706 46%, #141108 100%);
+      position: relative;
+    }
+
+    .khon-page::before,
+    .khon-page::after {
+      content: "";
+      position: fixed;
+      pointer-events: none;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .khon-page::before {
+      opacity: .18;
+      background-image:
+        radial-gradient(circle at 50% 0%, transparent 0 8px, #d5a83d 9px 10px, transparent 11px),
+        linear-gradient(45deg, transparent 45%, rgba(213,168,61,.5) 46% 54%, transparent 55%);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to bottom, black, transparent 70%);
+    }
+
+    .khon-page::after {
+      background: linear-gradient(90deg, rgba(0,0,0,.7), transparent 22%, transparent 78%, rgba(0,0,0,.7));
+    }
+
+    .content-shell { position: relative; z-index: 1; width: 100%; max-width: 1500px; margin: 0 auto; padding: 1.25rem; }
+    .glass {
+      background: var(--glass);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 60px rgba(0,0,0,.34), inset 0 1px rgba(255,239,187,.08);
+      backdrop-filter: blur(12px);
+    }
+    .gold-rule { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .gold-button {
+      background: linear-gradient(135deg, #f1cf67, #bc8520);
+      color: #201704;
+      border: 1px solid #f6d879;
+      font-weight: 700;
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .gold-button:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 10px 22px rgba(213,168,61,.22); }
+    .gold-button:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--gold-soft);
+      outline-offset: 3px;
+    }
+    .outline-button {
+      border: 1px solid rgba(231,190,78,.62);
+      color: var(--gold-soft);
+      background: rgba(213,168,61,.08);
+    }
+    .outline-button:hover { background: rgba(213,168,61,.17); }
+
+    .hero-mask {
+      width: 88px; height: 88px; border: 2px solid var(--gold);
+      border-radius: 48% 48% 42% 42%;
+      display: grid; place-items: center;
+      background: radial-gradient(circle at 36% 38%, #f6dd8d 0 4px, transparent 5px), radial-gradient(circle at 64% 38%, #f6dd8d 0 4px, transparent 5px), linear-gradient(145deg, #4b190f, #11100a);
+      box-shadow: 0 0 0 7px rgba(213,168,61,.08), 0 0 35px rgba(213,168,61,.25);
+      position: relative;
+    }
+    .hero-mask::after { content: ""; width: 35px; height: 13px; border-bottom: 3px solid var(--gold); border-radius: 50%; position: absolute; bottom: 20px; }
+
+    .legend-item { display: flex; align-items: center; gap: .55rem; font-size: .9rem; color: #f6ebc4; }
+    .legend-chip { width: 18px; height: 18px; border-radius: 5px; display: inline-block; flex: 0 0 auto; }
+    .chip-available { background: var(--red-seat); }
+    .chip-booked { background: var(--booked); }
+    .chip-selected { background: var(--red-seat); border: 3px solid var(--gold-soft); }
+    .chip-vip { background: #b83239; }
+    .chip-purple { background: var(--purple); }
+    .chip-green { background: var(--green-zone); }
+    .chip-yellow { background: var(--yellow); }
+
+    .seat-map-scroll { overflow-x: auto; padding: .25rem .15rem 1rem; scrollbar-color: var(--gold-muted) rgba(255,255,255,.06); }
+    .seat-map { min-width: 0; width: 100%; padding: 1rem; }
+    .stage {
+      text-align: center; letter-spacing: .28em; font-weight: 700; color: #291a02;
+      background: linear-gradient(90deg, #8c5d10, #f2d16c, #8c5d10);
+      border-radius: 50% 50% 12px 12px; padding: .65rem 1rem;
+      box-shadow: 0 8px 0 #3e2605, 0 15px 30px rgba(0,0,0,.4);
+      margin: 0 auto 1.6rem; max-width: 650px;
+    }
+    .seat-groups { display: grid; gap: 1.2rem; }
+    .seat-tier { display: grid; grid-template-columns: 1fr 1.7fr 1fr; align-items: start; gap: .65rem; }
+    .zone-card { border: 1px solid rgba(255,255,255,.12); border-radius: 12px; background: rgba(255,255,255,.025); overflow: hidden; min-width: 0; }
+    .zone-card .rows { overflow-x: auto; overflow-y: hidden; scrollbar-color: var(--gold-muted) rgba(255,255,255,.06); }
+    .zone-title { padding: .42rem .5rem; color: #181006; font-weight: 700; font-size: .78rem; text-align: center; }
+    .zone-vip .zone-title { background: #b83239; color: #fff1d5; }
+    .zone-purple .zone-title { background: var(--purple); color: white; }
+    .zone-green .zone-title { background: var(--green-zone); color: #082219; }
+    .zone-yellow .zone-title { background: var(--yellow); color: #211700; }
+    .rows { padding: .45rem; display: flex; flex-direction: column; gap: .25rem; }
+    .seat-row { display: flex; align-items: center; gap: .18rem; min-height: 24px; }
+    .row-label { width: 16px; text-align: center; color: var(--gold-soft); font-weight: 700; font-size: .72rem; }
+    .seat-run { display: flex; flex-wrap: nowrap; gap: 1px; }
+    .seat {
+      width: 18px; height: 19px; padding: 0; border: 1px solid rgba(255,255,255,.3);
+      border-radius: 4px 4px 7px 7px; cursor: pointer; position: relative;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--red-seat); color: white; font-size: 8px; line-height: 1;
+      transition: transform .15s ease, border .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .seat::after { content: ""; position: absolute; bottom: -3px; left: 3px; right: 3px; height: 3px; border-radius: 0 0 3px 3px; background: rgba(0,0,0,.5); }
+    .seat:hover:not(:disabled) { transform: translateY(-2px); background: var(--red-seat-hover); }
+    .seat.is-selected { border: 3px solid var(--gold-soft); background: #b82d34; box-shadow: 0 0 0 2px rgba(213,168,61,.25), 0 0 16px rgba(241,205,98,.55); }
+    .seat.is-booked { background: var(--booked); border-color: #74d7a5; cursor: not-allowed; color: #d5ffe9; }
+    .seat.is-booked::before { content: "✓"; font-size: 13px; font-weight: 800; }
+    .aisle-note { color: rgba(248,215,122,.55); font-size: .72rem; text-align: center; letter-spacing: .16em; margin: .15rem 0; }
+    .aisle-map-image { display: block; width: min(100%, 110px); max-width: 110px; max-height: 115px; height: auto; object-fit: contain; margin: .35rem auto; border-radius: .4rem; }
+
+    .summary-list { max-height: 180px; overflow-y: auto; scrollbar-color: var(--gold-muted) transparent; }
+    .summary-seat { padding: .55rem .7rem; border-bottom: 1px solid rgba(255,255,255,.08); display: flex; justify-content: space-between; gap: .5rem; font-size: .88rem; }
+    .form-field {
+      width: 100%; background: rgba(6,6,4,.72); color: #fff4d6; border: 1px solid rgba(213,168,61,.38);
+      border-radius: .65rem; padding: .72rem .8rem;
+    }
+    .form-field::placeholder { color: #b9aa83; }
+    .form-field:focus { border-color: var(--gold-soft); box-shadow: 0 0 0 3px rgba(213,168,61,.15); outline: none; }
+    .error-text { min-height: 1.1rem; color: #ffb0a8; font-size: .82rem; margin-top: .25rem; }
+    .showtime-card { display: flex; align-items: center; gap: .7rem; padding: .85rem; border: 1px solid rgba(213,168,61,.28); border-radius: .75rem; background: rgba(255,255,255,.035); color: #fff5d5; cursor: pointer; transition: border-color .2s ease, background .2s ease, transform .2s ease; }
+    .showtime-card:hover { border-color: var(--gold-soft); background: rgba(213,168,61,.1); transform: translateY(-1px); }
+    .showtime-card:has(input:checked) { border-color: var(--gold-soft); background: rgba(213,168,61,.16); box-shadow: 0 0 0 2px rgba(248,215,122,.12); }
+    .showtime-card input { accent-color: var(--gold-soft); width: 1.1rem; height: 1.1rem; flex: 0 0 auto; }
+    .notice { border-radius: .75rem; padding: .8rem 1rem; font-size: .9rem; }
+    .notice-info { border: 1px solid rgba(213,168,61,.37); background: rgba(213,168,61,.09); color: #ffebb0; }
+    .notice-success { border: 1px solid rgba(99,211,153,.5); background: rgba(46,125,89,.18); color: #c9ffe2; }
+    .notice-error { border: 1px solid rgba(255,131,121,.5); background: rgba(159,38,48,.18); color: #ffd0cb; }
+    .hidden-state { display: none !important; }
+    section[aria-labelledby="admin-title"], section[aria-labelledby="guide-title"] { display: none !important; }
+
+    dialog {
+      width: min(680px, calc(100% - 2rem)); color: var(--paper); background: #17140b;
+      border: 1px solid var(--gold); border-radius: 1rem; padding: 0; box-shadow: 0 24px 80px black;
+    }
+    dialog::backdrop { background: rgba(0,0,0,.75); backdrop-filter: blur(3px); }
+    pre {
+      white-space: pre-wrap; overflow-wrap: anywhere; overflow-x: auto; background: #080806; color: #f7e5ac;
+      border: 1px solid rgba(213,168,61,.3); border-radius: .7rem; padding: 1rem; font-size: .76rem; line-height: 1.55;
+    }
+    details summary { cursor: pointer; color: var(--gold-soft); font-weight: 700; }
+    details[open] summary { margin-bottom: 1rem; }
+
+    @media (max-width: 900px) {
+      .content-shell { padding: .8rem; }
+      .seat-map { min-width: 0; padding: .65rem .25rem; }
+      .seat-tier { grid-template-columns: 1fr; gap: .6rem; }
+      .seat-tier > .flex { min-height: 1.5rem; }
+      .zone-title { font-size: .82rem; }
+      .seat { width: 20px; height: 21px; font-size: 8px; }
+      .seat-run { gap: 2px; }
+      .seat-row { gap: .25rem; }
+      .row-label { width: 20px; font-size: .78rem; }
+    }
+  </style>
+  <script src="/_sdk/fcb6dc01f91829ac.resizing_sdk.js" type="text/javascript" integrity="sha512-YK8JfnN705qaEaVhiL7pcVB2Rs/BbdX5yxV55Az8zT/1JanyEWTw9HqCF915m9iV1YEaoil8qsjJz03l1Kb0Ug=="></script>
+ </head>
+ <body data-template-id="__page-root" style="background: rgb(8, 8, 6);">
+  <div class="khon-page">
+   <div class="content-shell">
+    <header class="pt-4 pb-8">
+     <div class="glass rounded-2xl p-5 md:p-8 flex flex-col md:flex-row gap-6 md:items-center justify-between">
+      <div class="flex gap-5 items-center">
+       <div class="hero-mask" aria-hidden="true"><i data-lucide="crown" class="text-[#f8d77a]"></i>
+       </div>
+       <div>
+        <p data-template-id="hero-eyebrow" class="canva-text text-[#f8d77a] tracking-[.18em] text-sm font-bold mb-2" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 31px; letter-spacing: 0.08rem;">การแสดงโขน</p>
+        <h1 data-template-id="hero-title" class="canva-text text-[#fff5d5] font-bold leading-tight" style="color: rgb(255, 245, 213); font-weight: 700; font-style: normal; font-size: 32px;"> เรื่อง รามเกียรติ์ ตอน พระรามรบทศกัณฐ์ (ยกรบ)</h1>
+        <p data-template-id="hero-subtitle" class="canva-text text-[#ddcfaa] mt-2" style="color: rgb(221, 207, 170); font-weight: 400; font-style: normal; font-size: 19px;">ศิลปะการแสดงชั้นสูงที่ผสมผสานนาฏศิลป์ ดนตรี วรรณคดี และความวิจิตรของเครื่องแต่งกายไว้อย่างงดงามและร่วมเป็นส่วนหนึ่งในการสืบสานและอนุรักษ์มรดกทางวัฒนธรรมไทยให้คงอยู่สืบไปกับพวกเราสาขาวิชานาฏศิลป์ศึกษา มหาวิทยาลัยราชภัฏศรีสะเกษ</p>
+       </div>
+      </div><button type="button" id="scroll-to-seats" data-template-id="hero-seat-button" class="canva-button gold-button rounded-xl px-5 py-3 inline-flex items-center justify-center gap-2 shrink-0" style="background: rgb(213, 168, 61); color: rgb(32, 23, 4); font-weight: 700;"> <i data-lucide="armchair" width="18"></i><span data-template-id="hero-seat-button-label" class="canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">เลือกที่นั่ง</span> </button>
+     </div>
+    </header>
+    <main>
+     <section aria-labelledby="legend-title" class="glass rounded-2xl p-5 mb-6">
+      <div class="flex flex-col lg:flex-row lg:items-center gap-5 justify-between">
+       <div>
+        <h2 id="legend-title" data-template-id="legend-title" class="canva-text text-[#f8d77a] font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 24px;">สถานะที่นั่งและประเภทโซน</h2>
+        <p data-template-id="legend-description" class="canva-text text-[#d9cca7] mt-1" style="color: rgb(217, 204, 167); font-weight: 400; font-style: normal; font-size: 16px;">ที่นั่งว่างทุกโซนใช้สีแดง ส่วนสีประจำโซนแสดงผ่านป้ายและ legend เพื่อให้แยกประเภทได้ชัดเจน</p>
+       </div>
+       <div class="flex flex-wrap gap-x-5 gap-y-3">
+        <span class="legend-item"><span class="legend-chip chip-available"></span><span data-template-id="legend-available" class="canva-text" style="color: rgb(246, 235, 196); font-weight: 400; font-style: normal; font-size: 16px;">ว่าง · กดเพื่อเลือก</span></span> <span class="legend-item"><span class="legend-chip chip-booked"></span><span data-template-id="legend-booked" class="canva-text" style="color: rgb(246, 235, 196); font-weight: 400; font-style: normal; font-size: 16px;">จองแล้ว · เลือกไม่ได้</span></span> <span class="legend-item"><span class="legend-chip chip-selected"></span><span data-template-id="legend-selected" class="canva-text" style="color: rgb(246, 235, 196); font-weight: 400; font-style: normal; font-size: 16px;">กำลังเลือก · ขอบทอง</span></span>
+       </div>
+      </div>
+      <div class="gold-rule my-4"></div>
+      <div class="flex flex-wrap gap-x-5 gap-y-3">
+       <span class="legend-item"><span class="legend-chip chip-vip"></span><span data-template-id="zone-vip-label" class="canva-text" style="color: rgb(246, 235, 196); font-weight: 400; font-style: normal; font-size: 16px;">VIP · 499 บาท</span></span> <span class="legend-item"><span class="legend-chip chip-purple"></span><span data-template-id="zone-purple-label" class="canva-text" style="color: rgb(246, 235, 196); font-weight: 400; font-style: normal; font-size: 16px;">ธรรมดาสีม่วง · 129 บาท</span></span> <span class="legend-item"><span class="legend-chip chip-green"></span><span data-template-id="zone-green-label" class="canva-text" style="color: rgb(246, 235, 196); font-weight: 400; font-style: normal; font-size: 16px;">ธรรมดาสีเขียว · 99 บาท</span></span> <span class="legend-item"><span class="legend-chip chip-yellow"></span><span data-template-id="zone-yellow-label" class="canva-text" style="color: rgb(246, 235, 196); font-weight: 400; font-style: normal; font-size: 16px;">ธรรมดาสีเหลือง · 59 บาท</span></span>
+      </div>
+     </section>
+     <section id="seat-section" aria-labelledby="seat-map-title" class="glass rounded-2xl p-3 md:p-5 mb-6">
+      <div class="px-2 pb-4 flex items-end justify-between gap-4">
+       <div>
+        <h2 id="seat-map-title" data-template-id="seat-map-title" class="canva-text text-[#f8d77a] font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 24px;">ผังที่นั่งการแสดง</h2>
+        <p data-template-id="seat-map-help" class="canva-text text-[#d9cca7] mt-1" style="color: rgb(217, 204, 167); font-weight: 400; font-style: normal; font-size: 16px;">เลือกหรือยกเลิกที่นั่งได้ด้วยเมาส์ การสัมผัส หรือแป้นพิมพ์ — บนมือถือเลื่อนผังในกรอบนี้ในแนวนอนได้</p>
+       </div><span id="live-seat-count" class="text-[#f8d77a] text-sm font-bold whitespace-nowrap" aria-live="polite"></span>
+      </div>
+      <div class="seat-map-scroll" aria-label="ผังที่นั่งโขน">
+       <div id="seat-map" class="seat-map"></div>
+      </div>
+     </section>
+     <div class="grid xl:grid-cols-[1.05fr_.95fr] gap-6 items-start">
+      <section aria-labelledby="summary-title" class="glass rounded-2xl p-5">
+       <div class="flex items-center justify-between gap-3">
+        <h2 id="summary-title" data-template-id="summary-title" class="canva-text text-[#f8d77a] font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 24px;">สรุปรายการจอง</h2><button id="clear-selection" type="button" data-template-id="clear-selection-button" class="canva-button outline-button rounded-lg px-3 py-2 text-sm" style="background: rgba(213, 168, 61, 0.08); color: rgb(248, 215, 122); font-weight: 600; font-style: normal; font-size: 16px;">ล้างที่เลือก</button>
+       </div>
+       <div class="gold-rule my-4"></div>
+       <p id="showtime-summary" class="rounded-lg border border-[#d5a83d]/25 bg-[#d5a83d]/[.06] px-3 py-2 text-sm text-[#f8d77a] mb-4" aria-live="polite">ยังไม่ได้เลือกรอบการแสดง</p>
+       <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="rounded-xl bg-black/30 p-3 border border-white/10">
+         <p data-template-id="selected-count-label" class="canva-text text-[#cdbf97] text-sm" style="color: rgb(205, 191, 151); font-weight: 400; font-style: normal; font-size: 16px;">จำนวนที่เลือก</p>
+         <p id="selected-count" class="text-2xl text-[#f8d77a] font-bold" aria-live="polite">0</p>
+        </div>
+        <div class="rounded-xl bg-black/30 p-3 border border-white/10">
+         <p data-template-id="grand-total-label" class="canva-text text-[#cdbf97] text-sm" style="color: rgb(205, 191, 151); font-weight: 400; font-style: normal; font-size: 16px;">ยอดรวมทั้งหมด</p>
+         <p id="grand-total" class="text-2xl text-[#f8d77a] font-bold" aria-live="polite">0 บาท</p>
+        </div>
+       </div>
+       <h3 data-template-id="selected-seats-title" class="canva-text text-[#f8d77a] font-bold mb-2" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 19px;">รายการที่นั่ง</h3>
+       <div id="selected-seat-list" class="summary-list rounded-xl bg-black/25 border border-white/10">
+        <p id="empty-selection" data-template-id="empty-selection" class="canva-text text-[#bcae89] p-4 text-center" style="color: rgb(188, 174, 137); font-weight: 400; font-style: normal; font-size: 16px;">ยังไม่ได้เลือกที่นั่ง</p>
+       </div>
+       <h3 data-template-id="price-breakdown-title" class="canva-text text-[#f8d77a] font-bold mt-5 mb-2" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 19px;">สรุปราคาแยกตามประเภทโซน</h3>
+       <div id="price-breakdown" class="space-y-2 text-sm"></div>
+       <p id="slip-summary" class="mt-3 text-sm text-[#d9cca7]" aria-live="polite"></p>
+      </section>
+      <section aria-labelledby="booking-title" class="glass rounded-2xl p-5">
+       <h2 id="booking-title" data-template-id="booking-title" class="canva-text text-[#f8d77a] font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 24px;">ข้อมูลผู้จอง</h2>
+       <p data-template-id="booking-description" class="canva-text text-[#d9cca7] mt-1" style="color: rgb(217, 204, 167); font-weight: 400; font-style: normal; font-size: 16px;">กรอกข้อมูลให้ครบถ้วนเพื่อยืนยันการจอง ที่นั่งจะถูกบันทึกไว้ในอุปกรณ์นี้</p>
+       <fieldset class="mt-5 rounded-xl border border-[#d5a83d]/35 bg-black/20 p-4">
+        <legend data-template-id="showtime-title" class="canva-text text-[#f8d77a] font-bold px-2" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 19px;">เลือกรอบการแสดง</legend>
+        <p data-template-id="showtime-help" class="canva-text text-[#d9cca7] mt-1 mb-3" style="color: rgb(217, 204, 167); font-weight: 400; font-style: normal; font-size: 16px;">กรุณาเลือก 1 รอบก่อนยืนยันการจอง</p>
+        <div class="grid sm:grid-cols-2 gap-3">
+         <label class="showtime-card"><input type="radio" name="showtime" value="วันที่ 10 ตุลาคม 2569 เวลา 09:00 น."><span data-template-id="showtime-option-1" class="canva-text" style="color: rgb(255, 245, 213); font-weight: 600; font-style: normal; font-size: 16px;">10 ตุลาคม 2569 · 09:00 น.</span></label> <label class="showtime-card"><input type="radio" name="showtime" value="วันที่ 10 ตุลาคม 2569 เวลา 14:00 น."><span data-template-id="showtime-option-2" class="canva-text" style="color: rgb(255, 245, 213); font-weight: 600; font-style: normal; font-size: 16px;">10 ตุลาคม 2569 · 14:00 น.</span></label> <label class="showtime-card"><input type="radio" name="showtime" value="วันที่ 11 ตุลาคม 2569 เวลา 09:00 น."><span data-template-id="showtime-option-3" class="canva-text" style="color: rgb(255, 245, 213); font-weight: 600; font-style: normal; font-size: 16px;">11 ตุลาคม 2569 · 09:00 น.</span></label> <label class="showtime-card"><input type="radio" name="showtime" value="วันที่ 11 ตุลาคม 2569 เวลา 14:00 น."><span data-template-id="showtime-option-4" class="canva-text" style="color: rgb(255, 245, 213); font-weight: 600; font-style: normal; font-size: 16px;">11 ตุลาคม 2569 · 14:00 น.</span></label>
+        </div>
+        <p id="showtime-error" class="error-text" aria-live="polite"></p>
+       </fieldset>
+       <form id="booking-form" novalidate="" class="mt-5 space-y-4">
+        <div class="grid sm:grid-cols-2 gap-4">
+         <div>
+          <label for="first-name" data-template-id="first-name-label" class="canva-text block text-[#f8d77a] mb-1 font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">ชื่อ</label> <input id="first-name" class="form-field" type="text" autocomplete="given-name">
+          <p id="first-name-error" class="error-text" aria-live="polite"></p>
+         </div>
+         <div>
+          <label for="last-name" data-template-id="last-name-label" class="canva-text block text-[#f8d77a] mb-1 font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">นามสกุล</label> <input id="last-name" class="form-field" type="text" autocomplete="family-name">
+          <p id="last-name-error" class="error-text" aria-live="polite"></p>
+         </div>
+        </div>
+        <div>
+         <label for="phone" data-template-id="phone-label" class="canva-text block text-[#f8d77a] mb-1 font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">เบอร์โทรศัพท์</label> <input id="phone" class="form-field" type="tel" inputmode="tel" autocomplete="tel">
+         <p id="phone-error" class="error-text" aria-live="polite"></p>
+        </div>
+        <fieldset>
+         <legend data-template-id="payment-label" class="canva-text block text-[#f8d77a] mb-2 font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">วิธีชำระเงิน</legend>
+         <div class="grid gap-3"><label class="showtime-card"><input type="radio" name="payment-method" value="พร้อมเพย์"><span data-template-id="payment-option-promptpay" class="canva-text" style="color: rgb(255, 245, 213); font-weight: 600; font-style: normal; font-size: 16px;">พร้อมเพย์</span></label> <label class="showtime-card"><input type="radio" name="payment-method" value="โอนผ่านธนาคาร"><span class="min-w-0"><span data-template-id="payment-option-bank" class="canva-text block" style="color: rgb(255, 245, 213); font-weight: 600; font-style: normal; font-size: 16px;">โอนผ่านธนาคาร</span><span id="bank-details-panel" class="hidden-state mt-2 block rounded-lg border border-[#d5a83d]/30 bg-black/25 px-3 py-2 text-sm leading-relaxed"><span data-template-id="bank-name" class="canva-text block" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">ธนาคารกรุงไทย</span><span data-template-id="bank-account-number" class="canva-text block" style="color: rgb(255, 245, 213); font-weight: 600; font-style: normal; font-size: 16px;">เลขที่บัญชี 8490500223</span><span data-template-id="bank-account-holder" class="canva-text block" style="color: rgb(255, 245, 213); font-weight: 600; font-style: normal; font-size: 16px;">ชื่อบัญชี ภูรเทศ ธรรมโม</span></span></span></label> <label class="showtime-card"><input type="radio" name="payment-method" value="บัตรเครดิต/เดบิต"><span data-template-id="payment-option-card" class="canva-text" style="color: rgb(255, 245, 213); font-weight: 600; font-style: normal; font-size: 16px;">บัตรเครดิต/เดบิต</span></label>
+         </div>
+         <p id="payment-error" class="error-text" aria-live="polite"></p>
+        </fieldset>
+        <div><label for="payment-amount" data-template-id="payment-amount-label" class="canva-text block text-[#f8d77a] mb-1 font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">ยอดที่ชำระ (บาท)</label><input id="payment-amount" class="form-field" type="number" min="0" step="1" inputmode="decimal">
+         <p id="payment-amount-error" class="error-text" aria-live="polite"></p>
+        </div>
+        <div id="promptpay-panel" class="hidden-state rounded-xl border border-[#d5a83d]/35 bg-white/95 p-4 text-center">
+         <img data-template-id="promptpay-qr-image" loading="lazy" class="canva-image mx-auto block w-full max-w-[280px] rounded-lg object-contain" src="canva://MAHUIaetvcU/1" alt="QR พร้อมเพย์สำหรับชำระเงิน">
+        </div>
+        <div class="rounded-xl border border-[#d5a83d]/35 bg-black/20 p-4"><label for="payment-slip" data-template-id="payment-slip-label" class="canva-text block text-[#f8d77a] mb-1 font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">แนบสลิปการโอนเงิน</label>
+         <p data-template-id="payment-slip-help" class="canva-text text-[#d9cca7] text-sm mb-3" style="color: rgb(217, 204, 167); font-weight: 400; font-style: normal; font-size: 16px;">รองรับไฟล์ PNG, JPG, JPEG หรือ PDF ขนาดไม่เกิน 5 MB สามารถเปลี่ยนหรือลบไฟล์ก่อนยืนยันได้</p><input id="payment-slip" class="form-field" type="file" accept="image/png,image/jpeg,application/pdf">
+         <p id="payment-slip-error" class="error-text" aria-live="polite"></p>
+         <div id="payment-slip-preview" class="hidden-state mt-3 rounded-lg border border-white/10 bg-black/25 p-3"></div>
+        </div>
+        <p id="booking-message" class="hidden-state notice" aria-live="polite"></p><button id="confirm-booking" type="submit" data-template-id="confirm-booking-button" class="canva-button gold-button w-full rounded-xl px-5 py-3 flex items-center justify-center gap-2" style="background: rgb(213, 168, 61); color: rgb(32, 23, 4); font-weight: 700;"> <i data-lucide="ticket-check" width="19"></i><span data-template-id="confirm-booking-button-label" class="canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">ยืนยันการจอง</span> </button>
+       </form>
+      </section>
+     </div>
+     <section aria-labelledby="sync-title" class="glass rounded-2xl p-5 mt-6">
+      <div class="flex items-center gap-3">
+       <i data-lucide="sheet" class="text-[#f8d77a]" aria-hidden="true"></i>
+       <div>
+        <h2 id="sync-title" data-template-id="sync-title" class="canva-text text-[#f8d77a] font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 24px;">ส่งข้อมูลเข้า Google Sheets</h2>
+        <p data-template-id="sync-description" class="canva-text text-[#d9cca7] mt-1" style="color: rgb(217, 204, 167); font-weight: 400; font-style: normal; font-size: 16px;">ตั้งค่า Google Apps Script Web App URL เพื่อส่งข้อมูลใบจองล่าสุดไปยัง Google Sheets</p>
+       </div>
+      </div>
+      <div class="mt-5 grid lg:grid-cols-[1fr_auto] gap-3">
+       <div>
+        <label for="google-script-url" data-template-id="google-url-label" class="canva-text block text-[#f8d77a] font-bold mb-1" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">Web App URL ของ Google Apps Script</label> <input id="google-script-url" class="form-field" type="url" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off">
+       </div>
+       <div class="flex items-end">
+        <button id="save-google-url" type="button" data-template-id="save-url-button" class="canva-button outline-button rounded-xl px-4 py-3 w-full" style="background: rgba(213, 168, 61, 0.08); color: rgb(248, 215, 122); font-weight: 600; font-style: normal; font-size: 16px;">บันทึก URL</button>
+       </div>
+      </div>
+      <div class="mt-3 flex flex-col sm:flex-row gap-3">
+       <button id="send-to-sheets" type="button" data-template-id="send-sheets-button" class="canva-button gold-button rounded-xl px-5 py-3 inline-flex justify-center items-center gap-2" style="background: rgb(213, 168, 61); color: rgb(32, 23, 4); font-weight: 700;"> <i data-lucide="send" width="18"></i><span data-template-id="send-sheets-button-label" class="canva-text" style="font-weight: 400; font-style: normal; font-size: 16px;">ส่งข้อมูลเข้า Google Sheets</span> </button> <button id="retry-sync" type="button" data-template-id="retry-sync-button" class="canva-button outline-button rounded-xl px-5 py-3 hidden-state" style="background: rgba(213, 168, 61, 0.08); color: rgb(248, 215, 122); font-weight: 600; font-style: normal; font-size: 16px;">ลองส่งอีกครั้ง</button>
+      </div>
+      <p id="sync-message" class="notice notice-info mt-4" aria-live="polite"></p>
+     </section>
+     <section aria-labelledby="admin-title" class="glass rounded-2xl p-5 mt-6">
+      <h2 id="admin-title" data-template-id="admin-title" class="canva-text text-[#f8d77a] font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 24px;">ส่วนตั้งค่าผู้ดูแล</h2>
+      <p data-template-id="admin-description" class="canva-text text-[#d9cca7] mt-1" style="color: rgb(217, 204, 167); font-weight: 400; font-style: normal; font-size: 16px;">ใช้สำหรับล้างสถานะที่นั่ง การจองล่าสุด และการตั้งค่า URL ที่บันทึกในเบราว์เซอร์เครื่องนี้</p><button id="open-reset-dialog" type="button" data-template-id="reset-data-button" class="canva-button mt-4 rounded-xl px-4 py-3 bg-[#6d1e24] border border-[#d76b64] text-[#ffe5dc] hover:bg-[#85252c]" style="background: rgb(109, 30, 36); color: rgb(255, 229, 220); font-weight: 700; font-style: normal; font-size: 16px;">รีเซ็ตข้อมูลทดสอบทั้งหมด</button>
+     </section>
+     <section aria-labelledby="guide-title" class="glass rounded-2xl p-5 mt-6 mb-8">
+      <h2 id="guide-title" data-template-id="guide-title" class="canva-text text-[#f8d77a] font-bold" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 24px;">คู่มือเชื่อม Google Sheets</h2>
+      <p data-template-id="guide-description" class="canva-text text-[#d9cca7] mt-1 mb-4" style="color: rgb(217, 204, 167); font-weight: 400; font-style: normal; font-size: 16px;">เปิดแต่ละหัวข้อเพื่อดูขั้นตอน Deploy และโค้ด Google Apps Script ที่คัดลอกไปใช้งานได้</p>
+      <details>
+       <summary data-template-id="guide-step-a" class="canva-text" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">A) สร้าง Google Sheet และเปิด Apps Script</summary>
+       <ol class="list-decimal pl-5 space-y-2 text-[#eee0bc]">
+        <li>สร้าง Google Sheet ใหม่สำหรับเก็บรายการจอง</li>
+        <li>เลือกเมนู <strong>Extensions &gt; Apps Script</strong></li>
+        <li>ลบโค้ดเดิมในโปรเจกต์ แล้ววางโค้ดในหัวข้อถัดไป</li>
+       </ol>
+      </details>
+      <div class="gold-rule my-4"></div>
+      <details>
+       <summary data-template-id="guide-step-b" class="canva-text" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">B) โค้ด Google Apps Script สำหรับรับข้อมูลการจอง</summary>
+       <p class="text-[#d9cca7] mb-3">เปลี่ยน <code>SPREADSHEET_ID</code> เป็นรหัส Google Sheet ของคุณจาก URL ของชีต</p>
+       <pre>function doPost(e) {
+  try {
+    const SPREADSHEET_ID = 'PUT_YOUR_SPREADSHEET_ID_HERE';
+    const SHEET_NAME = 'Reservations';
+
+    const payload = JSON.parse(e.postData.contents || '{}');
+    const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
+    let sheet = spreadsheet.getSheetByName(SHEET_NAME);
+
+    if (!sheet) {
+      sheet = spreadsheet.insertSheet(SHEET_NAME);
+    }
+
+    const headers = [
+      'booking_id', 'first_name', 'last_name', 'phone', 'email',
+      'payment_method', 'seats', 'total_price', 'status', 'created_at'
+    ];
+
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(headers);
+      sheet.setFrozenRows(1);
+    }
+
+    sheet.appendRow(headers.map(function(header) {
+      return payload[header] || '';
+    }));
+
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        success: true,
+        message: 'บันทึกข้อมูลการจองเรียบร้อยแล้ว'
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        success: false,
+        error: error.message
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}</pre>
+      </details>
+      <div class="gold-rule my-4"></div>
+      <details>
+       <summary data-template-id="guide-step-c" class="canva-text" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">C) Deploy เป็น Web app</summary>
+       <ol class="list-decimal pl-5 space-y-2 text-[#eee0bc]">
+        <li>กด <strong>Deploy &gt; New deployment</strong></li>
+        <li>เลือกประเภท <strong>Web app</strong></li>
+        <li>ตั้งค่า <strong>Execute as: Me</strong></li>
+        <li>ตั้งค่า <strong>Who has access</strong> เป็นตัวเลือกที่อนุญาตให้ผู้ใช้แอปส่งข้อมูลได้ เช่น Anyone หรือ Anyone with Google account ตามนโยบายของคุณ</li>
+        <li>กด Deploy อนุญาตสิทธิ์ แล้วคัดลอก Web app URL ที่ลงท้ายด้วย <code>/exec</code></li>
+       </ol>
+      </details>
+      <div class="gold-rule my-4"></div>
+      <details>
+       <summary data-template-id="guide-step-d" class="canva-text" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">D) วาง Web App URL และข้อควรระวังด้านความปลอดภัย</summary>
+       <p class="text-[#eee0bc]">นำ Web app URL ไปวางในช่อง “Web App URL ของ Google Apps Script” ด้านบน แล้วกดบันทึก URL จากนั้นหลังยืนยันใบจอง ให้กดส่งข้อมูลเข้า Google Sheets ได้</p>
+       <p class="notice notice-info mt-3">ข้อควรระวัง: ห้ามใส่รหัสผ่าน API key ข้อมูลบัตร หรือข้อมูลลับใด ๆ ไว้ในหน้าเว็บหรือ Google Apps Script ที่เผยแพร่ให้ผู้อื่นใช้งาน</p>
+      </details>
+      <div class="gold-rule my-4"></div>
+      <details>
+       <summary data-template-id="guide-step-e" class="canva-text" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px;">E) README และจุดตั้งค่าราคา/ผังที่นั่งในแอป</summary>
+       <p class="text-[#eee0bc]">คู่มือนี้ทำหน้าที่เป็น README ในตัวแอปแล้ว ส่วน CONFIG ด้านบนของ JavaScript มีทั้งราคาเริ่มต้นและโครงสร้างข้อมูลผังที่นั่ง คุณสามารถแก้ไขและคัดลอกไปใช้งานต่อได้อย่างเป็นระบบ</p>
+      </details>
+     </section>
+    </main>
+   </div>
+  </div><dialog id="confirmation-dialog" aria-labelledby="confirmation-title">
+   <div class="p-6">
+    <div class="flex items-start justify-between gap-4">
+     <div>
+      <p data-template-id="confirmation-eyebrow" class="canva-text text-[#f8d77a] font-bold tracking-[.15em] text-sm" style="color: rgb(248, 215, 122); font-weight: 700; font-style: normal; font-size: 16px; letter-spacing: 0.08rem;">ใบยืนยันการจอง</p>
+      <h2 id="confirmation-title" data-template-id="confirmation-title" class="canva-text text-[#fff5d5] font-bold mt-1" style="color: rgb(255, 245, 213); font-weight: 700; font-style: normal; font-size: 24px;">บันทึกการจองเรียบร้อยแล้ว</h2>
+     </div><i data-lucide="badge-check" class="text-[#f8d77a]" aria-hidden="true"></i>
+    </div>
+    <div class="gold-rule my-4"></div>
+    <div id="confirmation-content" class="space-y-3 text-[#efe1bb]"></div>
+    <div class="mt-6 flex justify-end">
+     <button id="close-confirmation" type="button" data-template-id="close-confirmation-button" class="canva-button gold-button rounded-xl px-5 py-3" style="background: rgb(213, 168, 61); color: rgb(32, 23, 4); font-weight: 700; font-style: normal; font-size: 16px;">ปิดใบยืนยัน</button>
+    </div>
+   </div>
+  </dialog> <dialog id="reset-dialog" aria-labelledby="reset-dialog-title">
+   <div class="p-6">
+    <h2 id="reset-dialog-title" data-template-id="reset-dialog-title" class="canva-text text-[#fff5d5] font-bold" style="color: rgb(255, 245, 213); font-weight: 700; font-style: normal; font-size: 24px;">ยืนยันการรีเซ็ตข้อมูล</h2>
+    <p data-template-id="reset-dialog-description" class="canva-text text-[#e4d5af] mt-2" style="color: rgb(228, 213, 175); font-weight: 400; font-style: normal; font-size: 16px;">การดำเนินการนี้จะล้างสถานะที่นั่งที่จอง ใบจองล่าสุด และ URL Google Apps Script ที่บันทึกไว้ในเบราว์เซอร์เครื่องนี้ ไม่สามารถย้อนกลับได้</p>
+    <div class="mt-6 flex flex-col-reverse sm:flex-row justify-end gap-3">
+     <button id="cancel-reset" type="button" data-template-id="cancel-reset-button" class="canva-button outline-button rounded-xl px-4 py-3" style="background: rgba(213, 168, 61, 0.08); color: rgb(248, 215, 122); font-weight: 600; font-style: normal; font-size: 16px;">ยกเลิก</button> <button id="confirm-reset" type="button" data-template-id="confirm-reset-button" class="canva-button rounded-xl px-4 py-3 bg-[#8f252c] border border-[#e17a70] text-white" style="background: rgb(143, 37, 44); color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">ยืนยันล้างข้อมูล</button>
+    </div>
+   </div>
+  </dialog>
+  <script src="/_sdk/e10c717c7e974dd1.editing_sdk.js" integrity="sha512-BcrhlH+uc7adjbcWhp1iZYPDDw0dRJh9MMJKYNtKQ35BtD5tMsxKlz53TSV8BnEY+0eujtTiWSFjanv0cOjj1g=="></script>
+  <script>
+    /* ==========================================================
+       CONFIG
+       แก้ไขราคาได้จากออบเจ็กต์ PRICES ด้านล่างนี้โดยตรง
+       แก้ไขจำนวนที่นั่งแต่ละแถวได้จาก SEAT_LAYOUT ด้านล่างนี้
+       ========================================================== */
+    const PRICES = {
+      vip: 499,
+      purple: 129,
+      green: 99,
+      yellow: 59
+    };
+
+    const ZONE_META = {
+      vip: { label: "VIP", thai: "VIP", className: "zone-vip" },
+      purple: { label: "ธรรมดาสีม่วง", thai: "ธรรมดาสีม่วง", className: "zone-purple" },
+      green: { label: "ธรรมดาสีเขียว", thai: "ธรรมดาสีเขียว", className: "zone-green" },
+      yellow: { label: "ธรรมดาสีเหลือง", thai: "ธรรมดาสีเหลือง", className: "zone-yellow" }
+    };
+
+    /* แต่ละรายการกำหนดชื่อโซน ประเภท และจำนวนที่นั่งต่อแถว */
+    const SEAT_LAYOUT = [
+      { id: "vip-left", name: "โซน C1: VIP ฝั่งซ้าย 🔴", type: "vip", position: "left", rows: { A: 10, B: 10, C: 11, D: 11 } },
+      { id: "vip-center", name: "โซน B1: VIP กลาง 🔴", type: "vip", position: "center", rows: { A: 13, B: 14, C: 14, D: 15, E: 15, F: 16, G: 16, H: 17, I: 17 } },
+      { id: "vip-right", name: "โซน A1: VIP ฝั่งขวา 🔴", type: "vip", position: "right", rows: { A: 11, B: 11, C: 12, D: 12 } },
+
+      { id: "purple-left", name: "โซน C2: ธรรมดาฝั่งซ้าย 🟣", type: "purple", position: "left", rows: { E: 12, F: 13, G: 13, H: 14, I: 14 } },
+      { id: "purple-center", name: "ทางเดินกลาง", type: "aisle", position: "center", rows: {} },
+      { id: "purple-right", name: "โซน A2: ธรรมดาฝั่งขวา 🟣", type: "purple", position: "right", rows: { E: 13, F: 14, G: 14, H: 15, I: 15 } },
+
+      { id: "green-left", name: "โซน C3: ธรรมดาฝั่งซ้าย 🟢", type: "green", position: "left", rows: { J: 16, K: 16, L: 17, M: 17 } },
+      { id: "green-center", name: "โซน B3: ธรรมดากลาง 🟢", type: "green", position: "center", rows: { J: 19, K: 19, L: 20, M: 20 } },
+      { id: "green-right", name: "โซน A3: ธรรมดาฝั่งขวา 🟢", type: "green", position: "right", rows: { J: 17, K: 17, L: 18, M: 18 } },
+
+      { id: "yellow-left", name: "โซน C4: ธรรมดาฝั่งซ้าย 🩷", type: "yellow", position: "left", rows: { N: 18, O: 19, P: 19, Q: 20 } },
+      { id: "yellow-center", name: "โซน B4: ธรรมดากลาง 🩷", type: "yellow", position: "center", rows: { N: 21, O: 22, P: 22, Q: 23 } },
+      { id: "yellow-right", name: "โซน A4: ธรรมดาฝั่งขวา 🩷", type: "yellow", position: "right", rows: { N: 19, O: 19, P: 20, Q: 21 } }
+    ];
+
+    /* ==========================================================
+       STATE + PERSISTENCE
+       ========================================================== */
+    const STORAGE_KEY = "khon-ticket-booking-state-v2";
+    const LEGACY_STORAGE_KEY = "khon-ticket-booking-state-v1";
+    const URL_STORAGE_KEY = "khon-google-script-url-v1";
+    let selectedSeats = new Set();
+    let bookedSeats = new Set();
+    let lastBooking = null;
+    let currentRecords = [];
+    let dataSdkReady = false;
+    let paymentSlip = null;
+
+    function loadBrowserState() {
+      try {
+        const current = localStorage.getItem(STORAGE_KEY);
+        const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+        const saved = JSON.parse(current || legacy || "{}");
+        if (!current && legacy) localStorage.setItem(STORAGE_KEY, legacy);
+        bookedSeats = new Set(saved.bookedSeats || []);
+        lastBooking = saved.lastBooking || null;
+        paymentSlip = lastBooking?.slip || null;
+      } catch (_) {
+        bookedSeats = new Set();
+      }
+      document.getElementById("google-script-url").value = localStorage.getItem(URL_STORAGE_KEY) || "";
+    }
+
+    function saveBrowserState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        bookedSeats: [...bookedSeats],
+        lastBooking
+      }));
+    }
+
+    /* ==========================================================
+       SEAT DATA HELPERS + RENDERING
+       ========================================================== */
+    function getAllSeats() {
+      const seats = [];
+      SEAT_LAYOUT.forEach(zone => {
+        if (zone.type === "aisle") return;
+        Object.entries(zone.rows).forEach(([row, count]) => {
+          for (let number = 1; number <= count; number++) {
+            seats.push({
+              id: `${zone.id}-${row}-${number}`,
+              zoneId: zone.id,
+              zone: zone.name,
+              type: zone.type,
+              row,
+              number,
+              price: PRICES[zone.type]
+            });
+          }
+        });
+      });
+      return seats;
+    }
+
+    const ALL_SEATS = getAllSeats();
+    const seatById = new Map(ALL_SEATS.map(seat => [seat.id, seat]));
+
+    function makeZoneCard(zone) {
+      if (zone.type === "aisle") {
+        const aisle = document.createElement("div");
+        aisle.className = "flex flex-col items-center justify-center h-full gap-1";
+        aisle.innerHTML = '<span class="aisle-note">ทางเดิน</span>';
+        return aisle;
+      }
+
+      const card = document.createElement("section");
+      card.className = `zone-card ${ZONE_META[zone.type].className}`;
+      card.setAttribute("aria-label", `โซน ${zone.name}`);
+
+      const title = document.createElement("div");
+      title.className = "zone-title";
+      title.textContent = zone.name.replace(/สีแดง|สีเหลือง|สีเขียว|สีม่วง/g, "").replace(/\s{2,}/g, " ").trim();
+      card.appendChild(title);
+
+      const rows = document.createElement("div");
+      rows.className = "rows";
+
+      Object.entries(zone.rows).forEach(([row, count]) => {
+        const rowEl = document.createElement("div");
+        rowEl.className = "seat-row";
+
+        const rowLabel = document.createElement("span");
+        rowLabel.className = "row-label";
+        rowLabel.textContent = row;
+        rowLabel.setAttribute("aria-label", `แถว ${row}`);
+        rowEl.appendChild(rowLabel);
+
+        const run = document.createElement("div");
+        run.className = "seat-run";
+
+        for (let number = 1; number <= count; number++) {
+          const id = `${zone.id}-${row}-${number}`;
+          const seat = seatById.get(id);
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "seat";
+          button.dataset.seatId = id;
+          button.textContent = number;
+          button.title = `${zone.name} แถว ${row} ที่นั่ง ${number}`;
+          button.addEventListener("click", () => toggleSeat(id));
+          run.appendChild(button);
+        }
+
+        rowEl.appendChild(run);
+        rows.appendChild(rowEl);
+      });
+
+      card.appendChild(rows);
+      return card;
+    }
+
+    function renderSeatMap() {
+      const map = document.getElementById("seat-map");
+      map.replaceChildren();
+
+      const stage = document.createElement("div");
+      stage.className = "stage";
+      stage.textContent = "เวทีการแสดงโขน";
+      map.appendChild(stage);
+
+      const groups = document.createElement("div");
+      groups.className = "seat-groups";
+
+      const tiers = [
+        ["vip-left", "vip-center", "vip-right"],
+        ["purple-left", "purple-center", "purple-right"],
+        ["green-left", "green-center", "green-right"],
+        ["yellow-left", "yellow-center", "yellow-right"]
+      ];
+
+      tiers.forEach((tier, index) => {
+        if (index > 0) {
+          const note = document.createElement("div");
+          note.className = "aisle-note";
+          note.textContent = "— ช่องทางเดิน —";
+          groups.appendChild(note);
+        }
+        const tierEl = document.createElement("div");
+        tierEl.className = "seat-tier";
+        tier.forEach(id => {
+          const zone = SEAT_LAYOUT.find(item => item.id === id);
+          tierEl.appendChild(makeZoneCard(zone));
+        });
+        groups.appendChild(tierEl);
+      });
+
+      map.appendChild(groups);
+      updateSeatButtons();
+    }
+
+    function updateSeatButtons() {
+      document.querySelectorAll(".seat").forEach(button => {
+        const seat = seatById.get(button.dataset.seatId);
+        const isBooked = bookedSeats.has(seat.id);
+        const isSelected = selectedSeats.has(seat.id);
+
+        button.classList.toggle("is-booked", isBooked);
+        button.classList.toggle("is-selected", isSelected);
+        button.disabled = isBooked;
+        button.setAttribute("aria-pressed", String(isSelected));
+        button.setAttribute(
+          "aria-label",
+          `โซน ${seat.zone} แถว ${seat.row} ที่นั่ง ${seat.number} ${isBooked ? "จองแล้ว กดเลือกไม่ได้" : isSelected ? "กำลังเลือก" : "ว่าง"} ราคา ${seat.price} บาท`
+        );
+        button.textContent = isBooked ? "" : seat.number;
+      });
+    }
+
+    function toggleSeat(id) {
+      if (bookedSeats.has(id)) return;
+      if (selectedSeats.has(id)) selectedSeats.delete(id);
+      else selectedSeats.add(id);
+      updateSeatButtons();
+      updateSummary();
+    }
+
+    function getSelectedSeatObjects() {
+      return [...selectedSeats].map(id => seatById.get(id)).sort((a, b) =>
+        a.zone.localeCompare(b.zone, "th") || a.row.localeCompare(b.row) || a.number - b.number
+      );
+    }
+
+    function money(value) {
+      return `${new Intl.NumberFormat("th-TH").format(value)} บาท`;
+    }
+
+    function updateSummary() {
+      const seats = getSelectedSeatObjects();
+      const total = seats.reduce((sum, seat) => sum + seat.price, 0);
+
+      document.getElementById("selected-count").textContent = seats.length;
+      document.getElementById("live-seat-count").textContent = `เลือกแล้ว ${seats.length} ที่นั่ง`;
+      document.getElementById("grand-total").textContent = money(total);
+      const selectedShowtime = document.querySelector('input[name="showtime"]:checked')?.value;
+      document.getElementById("showtime-summary").textContent = selectedShowtime ? `รอบการแสดง: ${selectedShowtime}` : "ยังไม่ได้เลือกรอบการแสดง";
+
+      const list = document.getElementById("selected-seat-list");
+      const empty = document.getElementById("empty-selection");
+      list.querySelectorAll(".summary-seat").forEach(el => el.remove());
+      empty.classList.toggle("hidden-state", seats.length > 0);
+
+      seats.forEach(seat => {
+        const item = document.createElement("div");
+        item.className = "summary-seat";
+        item.innerHTML = `<span>${seat.zone} · แถว ${seat.row} · ที่ ${seat.number}</span><strong class="text-[#f8d77a] whitespace-nowrap">${money(seat.price)}</strong>`;
+        list.appendChild(item);
+      });
+
+      const typeTotals = { vip: 0, purple: 0, green: 0, yellow: 0 };
+      const typeCounts = { vip: 0, purple: 0, green: 0, yellow: 0 };
+      seats.forEach(seat => {
+        typeTotals[seat.type] += seat.price;
+        typeCounts[seat.type] += 1;
+      });
+
+      const breakdown = document.getElementById("price-breakdown");
+      breakdown.replaceChildren();
+      Object.keys(PRICES).forEach(type => {
+        const row = document.createElement("div");
+        row.className = "flex justify-between gap-4 rounded-lg px-3 py-2 bg-black/20 border border-white/5";
+        row.innerHTML = `<span class="text-[#d9cca7]">${ZONE_META[type].thai} (${typeCounts[type]} ที่นั่ง)</span><strong class="text-[#f8d77a]">${money(typeTotals[type])}</strong>`;
+        breakdown.appendChild(row);
+      });
+      document.getElementById("slip-summary").textContent = paymentSlip ? `สลิปที่แนบ: ${paymentSlip.name} · เก็บไว้ในเบราว์เซอร์อุปกรณ์นี้เท่านั้น` : "ยังไม่ได้แนบสลิปการโอนเงิน";
+    }
+
+    /* ==========================================================
+       BOOKING + VALIDATION
+       ========================================================== */
+    function showMessage(id, text, type) {
+      const el = document.getElementById(id);
+      el.textContent = text;
+      el.className = `notice notice-${type}`;
+      el.classList.remove("hidden-state");
+    }
+
+    function clearMessage(id) {
+      const el = document.getElementById(id);
+      el.textContent = "";
+      el.className = "hidden-state notice";
+    }
+
+    function validateBooking() {
+      const values = {
+        firstName: document.getElementById("first-name").value.trim(),
+        lastName: document.getElementById("last-name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        paymentMethod: document.querySelector('input[name="payment-method"]:checked')?.value || "",
+        showtime: document.querySelector('input[name="showtime"]:checked')?.value || "",
+        paymentAmount: Number(document.getElementById("payment-amount").value)
+      };
+
+      const errors = {};
+      if (!values.firstName) errors.firstName = "กรุณากรอกชื่อ";
+      if (!values.lastName) errors.lastName = "กรุณากรอกนามสกุล";
+      if (!/^0\d{8,9}$/.test(values.phone.replace(/[-\s]/g, ""))) errors.phone = "กรุณากรอกเบอร์โทรศัพท์ไทยให้ถูกต้อง";
+      if (!values.paymentMethod) errors.payment = "กรุณาเลือกวิธีชำระเงิน";
+      if (!values.showtime) errors.showtime = "กรุณาเลือกรอบการแสดง";
+      const expectedTotal = getSelectedSeatObjects().reduce((sum, seat) => sum + seat.price, 0);
+      if (!paymentSlip) errors.paymentSlip = "กรุณาแนบหลักฐานการชำระเงินก่อนยืนยัน";
+      if (values.paymentAmount !== expectedTotal) errors.paymentAmount = `กรุณาระบุยอด ${expectedTotal} บาทให้ตรงกับยอดรวมเท่านั้น`;
+      if (values.paymentMethod === "โอนผ่านธนาคาร" && !paymentSlip) errors.paymentSlip = "กรุณาแนบหลักฐานการโอนเงินก่อนยืนยัน";
+      if (selectedSeats.size === 0) errors.seats = "กรุณาเลือกที่นั่งอย่างน้อย 1 ที่นั่ง";
+      document.getElementById("showtime-error").textContent = errors.showtime || "";
+
+      document.getElementById("first-name-error").textContent = errors.firstName || "";
+      document.getElementById("last-name-error").textContent = errors.lastName || "";
+      document.getElementById("phone-error").textContent = errors.phone || "";
+      document.getElementById("payment-error").textContent = errors.payment || "";
+      document.getElementById("payment-amount-error").textContent = errors.paymentAmount || "";
+      document.getElementById("payment-slip-error").textContent = errors.paymentSlip || document.getElementById("payment-slip-error").textContent;
+
+      return { valid: Object.keys(errors).length === 0, values, errors };
+    }
+
+    function createBookingId() {
+      const now = new Date();
+      const date = [
+        now.getFullYear(),
+        String(now.getMonth() + 1).padStart(2, "0"),
+        String(now.getDate()).padStart(2, "0")
+      ].join("");
+      const code = Math.random().toString(36).slice(2, 6).toUpperCase();
+      return `KHON-${date}-${code}`;
+    }
+
+    async function storeBookingInCanvaSheet(booking) {
+      if (!dataSdkReady) {
+        showMessage("booking-message", "บันทึกการจองไว้ในอุปกรณ์แล้ว แต่ Canva Sheet ยังเชื่อมต่อไม่พร้อม จึงยังบันทึกลงชีตไม่ได้", "info");
+        return;
+      }
+      const showtimeParts = booking.showtime.match(/วันที่ (.+?) เวลา (.+?) น\./) || [];
+      const record = {
+        booking_id: booking.bookingId,
+        created_at: booking.createdAt,
+        showtime: booking.showtime,
+        show_date: showtimeParts[1] || booking.showtime,
+        show_time: showtimeParts[2] || "",
+        seats: booking.seats.map(seat => `${seat.zone} แถว ${seat.row} ที่ ${seat.number}`).join(", "),
+        seat_zones: [...new Set(booking.seats.map(seat => seat.zone))].join(", "),
+        seat_count: booking.seats.length,
+        total_price: booking.total,
+        first_name: booking.firstName,
+        last_name: booking.lastName,
+        phone: booking.phone,
+        email: booking.email,
+        payment_method: booking.paymentMethod,
+        payment_account_details: booking.paymentMethod === "พร้อมเพย์" ? "พร้อมเพย์" : booking.paymentMethod === "โอนผ่านธนาคาร" ? "ธนาคารกรุงไทย · 8490500223" : "บัตรเครดิต/เดบิต",
+        slip_filename: booking.slip?.name || "",
+        payment_status: booking.status,
+        payment_amount_declared: booking.paymentAmountDeclared,
+        verification_status: booking.verificationStatus,
+        booking_status: "รอตรวจสอบการชำระเงิน"
+      };
+      const existing = currentRecords.find(item => item.booking_id === record.booking_id);
+      const result = existing
+        ? await window.dataSdk.update({ ...existing, ...record })
+        : await window.dataSdk.create(record);
+      if (!result.isOk) {
+        showMessage("booking-message", "บันทึกการจองไว้ในอุปกรณ์แล้ว แต่ยังไม่สามารถบันทึกลง Canva Sheet ได้ในขณะนี้ กรุณาลองใหม่ภายหลัง", "info");
+      } else {
+        showMessage("booking-message", `บันทึกการจอง ${booking.bookingId} ลง Canva Sheet เรียบร้อยแล้ว`, "success");
+      }
+    }
+
+    function showConfirmation(booking) {
+      const content = document.getElementById("confirmation-content");
+      content.replaceChildren();
+
+      const rows = [
+        ["เลขที่การจอง", booking.bookingId],
+        ["ผู้จอง", `${booking.firstName} ${booking.lastName}`],
+        ["โทรศัพท์", booking.phone],
+        ["วิธีชำระเงิน", booking.paymentMethod],
+        ["รอบการแสดง", booking.showtime],
+        ["สถานะ", booking.status],
+        ["ยอดรวม", money(booking.total)]
+      ];
+
+      rows.forEach(([label, value]) => {
+        const row = document.createElement("div");
+        row.className = "flex justify-between gap-4 border-b border-white/10 pb-2";
+        row.innerHTML = `<span class="text-[#cdbf97]">${label}</span><strong class="text-right">${value}</strong>`;
+        content.appendChild(row);
+      });
+
+      const slipBlock = document.createElement("div");
+      slipBlock.className = "rounded-xl bg-black/30 border border-[#d5a83d]/30 p-3";
+      slipBlock.textContent = booking.slip ? `สลิปการโอนเงิน: ${booking.slip.name} (เก็บไว้ในเบราว์เซอร์อุปกรณ์นี้เท่านั้น)` : "ยังไม่ได้แนบสลิปการโอนเงิน";
+      content.appendChild(slipBlock);
+
+      const seatBlock = document.createElement("div");
+      seatBlock.className = "rounded-xl bg-black/30 border border-[#d5a83d]/30 p-3";
+      seatBlock.innerHTML = `<p class="text-[#f8d77a] font-bold mb-2">ที่นั่งที่จอง</p><p>${booking.seats.map(seat => `${seat.zone} แถว ${seat.row} ที่ ${seat.number}`).join("<br>")}</p>`;
+      content.appendChild(seatBlock);
+
+      document.getElementById("confirmation-dialog").showModal();
+    }
+
+    /* ==========================================================
+       ONLINE SEAT LOCKING
+       ========================================================== */
+    function getGoogleScriptUrl_() {
+      return document.getElementById("google-script-url").value.trim();
+    }
+
+    function jsonpGet_(url, params, timeoutMs = 10000) {
+      return new Promise((resolve, reject) => {
+        const callbackName = "khonJsonp_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+        const script = document.createElement("script");
+        const query = new URLSearchParams({ ...params, callback: callbackName, _: Date.now().toString() });
+        const timer = setTimeout(() => {
+          cleanup();
+          reject(new Error("หมดเวลารอข้อมูลจาก Google Apps Script"));
+        }, timeoutMs);
+
+        function cleanup() {
+          clearTimeout(timer);
+          script.remove();
+          try { delete window[callbackName]; } catch (_) { window[callbackName] = undefined; }
+        }
+
+        window[callbackName] = data => { cleanup(); resolve(data); };
+        script.onerror = () => { cleanup(); reject(new Error("ไม่สามารถเชื่อมต่อ Google Apps Script ได้")); };
+        script.src = url + (url.includes("?") ? "&" : "?") + query.toString();
+        document.head.appendChild(script);
+      });
+    }
+
+    async function refreshOnlineSeats(showtime, silent = false) {
+      const url = getGoogleScriptUrl_();
+      if (!url || !showtime) return;
+
+      try {
+        const result = await jsonpGet_(url, { action: "seats", showtime });
+        if (!result || !result.success) throw new Error(result?.message || "อ่านสถานะที่นั่งไม่สำเร็จ");
+
+        const serverBooked = new Set(result.seats || []);
+        const localSelectedBefore = [...selectedSeats];
+        bookedSeats = serverBooked;
+
+        // ถ้าที่นั่งที่ผู้ใช้กำลังเลือกถูกคนอื่นจองไปแล้ว ให้เอาออกจากรายการเลือก
+        localSelectedBefore.forEach(id => {
+          if (bookedSeats.has(id)) selectedSeats.delete(id);
+        });
+
+        updateSeatButtons();
+        updateSummary();
+        if (!silent && localSelectedBefore.some(id => bookedSeats.has(id))) {
+          showMessage("booking-message", "มีที่นั่งที่คุณเลือกถูกจองไปแล้ว ระบบนำออกจากรายการเลือกให้แล้ว", "info");
+        }
+      } catch (error) {
+        if (!silent) {
+          showMessage("booking-message", "ยังไม่สามารถโหลดสถานะที่นั่งออนไลน์ได้ กรุณาตรวจสอบ Web App URL", "error");
+        }
+      }
+    }
+
+    async function reserveSeatsOnline_(booking) {
+      const url = getGoogleScriptUrl_();
+      if (!url) {
+        throw new Error("ยังไม่ได้ตั้งค่า Web App URL ของ Google Apps Script");
+      }
+
+      const payload = {
+        action: "reserve",
+        booking_id: booking.bookingId,
+        created_at: booking.createdAt,
+        showtime: booking.showtime,
+        show_date: (booking.showtime.match(/วันที่ (.+?) เวลา (.+?) น\./) || [])[1] || booking.showtime,
+        show_time: (booking.showtime.match(/วันที่ (.+?) เวลา (.+?) น\./) || [])[2] || "",
+        seats: booking.seats.map(seat => `${seat.zone} แถว ${seat.row} ที่ ${seat.number}`).join(", "),
+        seat_zones: [...new Set(booking.seats.map(seat => seat.zone))].join(", "),
+        seat_count: booking.seats.length,
+        seat_ids: booking.seats.map(seat => seat.id),
+        total_price: booking.total,
+        first_name: booking.firstName,
+        last_name: booking.lastName,
+        phone: booking.phone,
+        email: booking.email,
+        payment_method: booking.paymentMethod,
+        payment_account_details: booking.paymentMethod === "พร้อมเพย์" ? "พร้อมเพย์" : booking.paymentMethod === "โอนผ่านธนาคาร" ? "ธนาคารกรุงไทย · 8490500223" : "บัตรเครดิต/เดบิต",
+        slip_filename: booking.slip?.name || "",
+        payment_status: booking.status,
+        payment_amount_declared: booking.paymentAmountDeclared,
+        verification_status: booking.verificationStatus,
+        booking_status: "รอตรวจสอบการชำระเงิน"
+      };
+
+      // POST แบบ no-cors: Apps Script จะรับคำขอและ LockService จะกันการจองซ้ำ
+      await fetch(url, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+
+      // อ่านผลจากเซิร์ฟเวอร์ผ่าน JSONP เพื่อยืนยันว่าที่นั่งทั้งหมดเป็นของ booking นี้
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const check = await jsonpGet_(url, { action: "check", showtime: booking.showtime, booking_id: booking.bookingId });
+      const confirmed = new Set(check?.seats || []);
+      const allConfirmed = booking.seats.every(seat => confirmed.has(seat.id));
+
+      if (!allConfirmed) {
+        await refreshOnlineSeats(booking.showtime, true);
+        throw new Error("มีที่นั่งบางส่วนถูกจองโดยผู้อื่นก่อนหน้านี้ กรุณาเลือกที่นั่งใหม่");
+      }
+
+      bookedSeats = new Set([...bookedSeats, ...booking.seats.map(seat => seat.id)]);
+      return true;
+    }
+
+    document.getElementById("booking-form").addEventListener("submit", async event => {
+      event.preventDefault();
+      clearMessage("booking-message");
+      const check = validateBooking();
+
+      if (!check.valid) {
+        showMessage("booking-message", check.errors.showtime || check.errors.seats || "กรุณาตรวจสอบข้อมูลในแบบฟอร์มให้ครบถ้วน", "error");
+        return;
+      }
+
+      const button = document.getElementById("confirm-booking");
+      button.disabled = true;
+      button.classList.add("opacity-60", "cursor-wait");
+
+      const seats = getSelectedSeatObjects();
+      const total = seats.reduce((sum, seat) => sum + seat.price, 0);
+      const booking = {
+        bookingId: createBookingId(),
+        ...check.values,
+        seats,
+        total,
+        paymentAmountDeclared: check.values.paymentAmount,
+        paymentAccountName: check.values.recipientAccountName,
+        verificationStatus: "รอตรวจสอบการชำระเงิน",
+        status: "รอตรวจสอบการชำระเงิน",
+        createdAt: new Date().toISOString(),
+        slip: paymentSlip
+      };
+
+      try {
+        setSyncMessage("กำลังตรวจสอบและล็อกที่นั่งบนระบบกลาง…", "info");
+        await reserveSeatsOnline_(booking);
+
+        seats.forEach(seat => bookedSeats.add(seat.id));
+        lastBooking = booking;
+        selectedSeats.clear();
+        saveBrowserState();
+        updateSeatButtons();
+        updateSummary();
+        showConfirmation(booking);
+        await storeBookingInCanvaSheet(booking);
+
+        document.getElementById("booking-form").reset();
+        showMessage("booking-message", `บันทึกการจอง ${booking.bookingId} เรียบร้อยแล้ว สถานะ: รอชำระเงิน`, "success");
+      } catch (error) {
+        showMessage("booking-message", error?.message || "ไม่สามารถล็อกที่นั่งได้ กรุณาลองใหม่", "error");
+        await refreshOnlineSeats(booking.showtime, true);
+      } finally {
+        button.disabled = false;
+        button.classList.remove("opacity-60", "cursor-wait");
+      }
+    });
+
+    /* ==========================================================
+       GOOGLE APPS SCRIPT SYNC
+       ========================================================== */
+    function setSyncMessage(text, type) {
+      const message = document.getElementById("sync-message");
+      message.textContent = text;
+      message.className = `notice notice-${type} mt-4`;
+    }
+
+    document.getElementById("save-google-url").addEventListener("click", () => {
+      const input = document.getElementById("google-script-url");
+      const url = input.value.trim();
+      if (url && !/^https:\/\/script\.google\.com\//.test(url)) {
+        setSyncMessage("กรุณาใช้ Web App URL ที่ขึ้นต้นด้วย https://script.google.com/ เพื่อความปลอดภัย", "error");
+        return;
+      }
+      localStorage.setItem(URL_STORAGE_KEY, url);
+      setSyncMessage(url ? "บันทึก Web App URL บนอุปกรณ์นี้แล้ว" : "ล้าง Web App URL แล้ว คุณยังบันทึกการจองในแอปได้ตามปกติ", "success");
+    });
+
+    async function syncLatestBooking() {
+      const url = document.getElementById("google-script-url").value.trim();
+      const retry = document.getElementById("retry-sync");
+      const send = document.getElementById("send-to-sheets");
+
+      if (!lastBooking) {
+        setSyncMessage("ยังไม่มีใบจองล่าสุดสำหรับส่ง กรุณายืนยันการจองก่อน", "error");
+        return;
+      }
+      if (!url) {
+        setSyncMessage("ยังไม่ได้ตั้งค่า Web App URL กรุณาเปิดคู่มือด้านล่าง สร้าง Google Apps Script แล้ววาง URL ที่ลงท้ายด้วย /exec ในช่องตั้งค่า", "info");
+        return;
+      }
+      if (!/^https:\/\/script\.google\.com\//.test(url)) {
+        setSyncMessage("Web App URL ไม่ถูกต้อง กรุณาตรวจสอบว่าเป็น URL ของ Google Apps Script", "error");
+        return;
+      }
+
+      send.disabled = true;
+      send.classList.add("opacity-60", "cursor-wait");
+      retry.classList.add("hidden-state");
+      setSyncMessage("กำลังส่งข้อมูลการจองไปยัง Google Sheets…", "info");
+
+      const showtimeParts = lastBooking.showtime.match(/วันที่ (.+?) เวลา (.+?) น\./) || [];
+      const payload = {
+        booking_id: lastBooking.bookingId,
+        created_at: lastBooking.createdAt,
+        showtime: lastBooking.showtime,
+        show_date: showtimeParts[1] || lastBooking.showtime,
+        show_time: showtimeParts[2] || "",
+        seats: lastBooking.seats.map(seat => `${seat.zone} แถว ${seat.row} ที่ ${seat.number}`).join(", "),
+        seat_zones: [...new Set(lastBooking.seats.map(seat => seat.zone))].join(", "),
+        seat_count: lastBooking.seats.length,
+        total_price: lastBooking.total,
+        first_name: lastBooking.firstName,
+        last_name: lastBooking.lastName,
+        phone: lastBooking.phone,
+        email: lastBooking.email,
+        payment_method: lastBooking.paymentMethod,
+        payment_account_details: lastBooking.paymentMethod === "พร้อมเพย์" ? "พร้อมเพย์" : lastBooking.paymentMethod === "โอนผ่านธนาคาร" ? "ธนาคารกรุงไทย · 8490500223" : "บัตรเครดิต/เดบิต",
+        slip_filename: lastBooking.slip?.name || "",
+        payment_status: lastBooking.status,
+        payment_amount_declared: lastBooking.paymentAmountDeclared,
+        verification_status: lastBooking.verificationStatus,
+        booking_status: "รอตรวจสอบการชำระเงิน"
+      };
+
+      try {
+        await fetch(url, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+        setSyncMessage(`ส่งข้อมูลใบจอง ${lastBooking.bookingId} ไปยัง Google Sheets แล้ว โปรดตรวจสอบแถวข้อมูลในชีตของคุณ`, "success");
+      } catch (_) {
+        setSyncMessage("ไม่สามารถส่งข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่อ อินเทอร์เน็ต และสิทธิ์การ Deploy ของ Web App แล้วลองอีกครั้ง", "error");
+        retry.classList.remove("hidden-state");
+      } finally {
+        send.disabled = false;
+        send.classList.remove("opacity-60", "cursor-wait");
+      }
+    }
+
+    document.querySelectorAll('input[name="showtime"]').forEach(input => {
+      input.addEventListener("change", async () => {
+        selectedSeats.clear();
+        updateSummary();
+        await refreshOnlineSeats(input.value);
+      });
+    });
+
+    document.querySelectorAll('input[name="payment-method"]').forEach(input => {
+      input.addEventListener("change", event => {
+        document.getElementById("promptpay-panel").classList.toggle("hidden-state", event.target.value !== "พร้อมเพย์");
+        document.getElementById("bank-details-panel").classList.toggle("hidden-state", event.target.value !== "โอนผ่านธนาคาร");
+      });
+    });
+
+    document.getElementById("payment-slip").addEventListener("change", event => {
+      const file = event.target.files[0];
+      const error = document.getElementById("payment-slip-error");
+      const preview = document.getElementById("payment-slip-preview");
+      paymentSlip = null;
+      preview.replaceChildren();
+      preview.classList.add("hidden-state");
+      error.textContent = "";
+      if (!file) return;
+      const allowed = ["image/png", "image/jpeg", "application/pdf"];
+      if (!allowed.includes(file.type) || file.size > 5 * 1024 * 1024) {
+        error.textContent = file.size > 5 * 1024 * 1024 ? "ไฟล์มีขนาดเกิน 5 MB กรุณาเลือกไฟล์ใหม่" : "รองรับเฉพาะไฟล์ PNG, JPG, JPEG หรือ PDF เท่านั้น";
+        event.target.value = "";
+        return;
+      }
+      paymentSlip = { name: file.name, type: file.type, size: file.size };
+      const label = document.createElement("p");
+      label.className = "text-[#f8d77a] font-bold";
+      label.textContent = `ไฟล์สลิป: ${file.name}`;
+      preview.appendChild(label);
+      if (file.type.startsWith("image/")) {
+        const image = document.createElement("img");
+        image.className = "mt-2 max-h-48 mx-auto rounded-lg object-contain";
+        image.alt = "ตัวอย่างสลิปการโอนเงิน";
+        image.src = URL.createObjectURL(file);
+        preview.appendChild(image);
+      }
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "outline-button rounded-lg px-3 py-2 mt-3";
+      remove.textContent = "ลบไฟล์สลิป";
+      remove.addEventListener("click", () => {
+        document.getElementById("payment-slip").value = "";
+        paymentSlip = null;
+        preview.replaceChildren();
+        preview.classList.add("hidden-state");
+      });
+      preview.appendChild(remove);
+      preview.classList.remove("hidden-state");
+    });
+
+    document.getElementById("send-to-sheets").addEventListener("click", syncLatestBooking);
+    document.getElementById("retry-sync").addEventListener("click", syncLatestBooking);
+
+    /* ==========================================================
+       UI CONTROLS
+       ========================================================== */
+    document.getElementById("scroll-to-seats").addEventListener("click", () => {
+      document.getElementById("seat-section").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    document.getElementById("clear-selection").addEventListener("click", () => {
+      selectedSeats.clear();
+      updateSeatButtons();
+      updateSummary();
+    });
+
+    document.getElementById("close-confirmation").addEventListener("click", () => {
+      document.getElementById("confirmation-dialog").close();
+    });
+
+    document.getElementById("open-reset-dialog").addEventListener("click", () => {
+      document.getElementById("reset-dialog").showModal();
+    });
+
+    document.getElementById("cancel-reset").addEventListener("click", () => {
+      document.getElementById("reset-dialog").close();
+    });
+
+    document.getElementById("confirm-reset").addEventListener("click", () => {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(LEGACY_STORAGE_KEY);
+      localStorage.removeItem(URL_STORAGE_KEY);
+      bookedSeats.clear();
+      selectedSeats.clear();
+      lastBooking = null;
+      paymentSlip = null;
+      document.getElementById("payment-slip").value = "";
+      document.getElementById("payment-slip-preview").replaceChildren();
+      document.getElementById("payment-slip-preview").classList.add("hidden-state");
+      document.getElementById("google-script-url").value = "";
+      document.getElementById("booking-form").reset();
+      document.getElementById("reset-dialog").close();
+      updateSeatButtons();
+      updateSummary();
+      setSyncMessage("ล้างข้อมูลทดสอบบนเบราว์เซอร์นี้เรียบร้อยแล้ว", "success");
+      showMessage("booking-message", "รีเซ็ตข้อมูลการจองบนอุปกรณ์นี้เรียบร้อยแล้ว", "success");
+    });
+
+    /* ==========================================================
+       CANVA SHEET INITIALIZATION
+       ========================================================== */
+    async function initCanvaSheet() {
+      const handler = {
+        onDataChanged(data) {
+          currentRecords = data;
+        }
+      };
+      const initResult = await window.dataSdk.init(handler);
+      dataSdkReady = initResult.isOk;
+    }
+
+    /* ==========================================================
+       APP INITIALIZATION
+       ========================================================== */
+    document.addEventListener("DOMContentLoaded", async () => {
+      loadBrowserState();
+      renderSeatMap();
+      updateSummary();
+      const initialShowtime = document.querySelector('input[name="showtime"]:checked')?.value;
+      if (initialShowtime && document.getElementById("google-script-url").value) {
+        refreshOnlineSeats(initialShowtime, true);
+      }
+      setSyncMessage(
+        document.getElementById("google-script-url").value
+          ? "ตั้งค่า Web App URL แล้ว พร้อมส่งใบจองล่าสุดไปยัง Google Sheets"
+          : "ยังไม่ได้ตั้งค่า Web App URL คุณยังยืนยันและบันทึกการจองในแอปนี้ได้ตามปกติ",
+        "info"
+      );
+      lucide.createIcons();
+      await initCanvaSheet();
+    });
+  </script>
+ 
+</body></html>
