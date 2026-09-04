@@ -165,8 +165,14 @@
     }
   });
 
+  const promptpayPanel = document.getElementById("promptpay-panel");
+  const bankPanel = document.getElementById("bank-panel");
   document.querySelectorAll('input[name="payment-method"]').forEach(input =>
-    input.addEventListener("change", () => showFieldError("payment-method", ""))
+    input.addEventListener("change", event => {
+      showFieldError("payment-method", "");
+      promptpayPanel.classList.toggle("hidden", event.target.value !== "พร้อมเพย์");
+      bankPanel.classList.toggle("hidden", event.target.value !== "โอนผ่านธนาคาร");
+    })
   );
 
   clearSelectionBtn.addEventListener("click", () => {
@@ -269,6 +275,8 @@
     paymentSlipPreview.replaceChildren();
     paymentSlipPreview.classList.add("hidden");
     document.querySelectorAll('input[name="payment-method"]').forEach(r => (r.checked = false));
+    promptpayPanel.classList.add("hidden");
+    bankPanel.classList.add("hidden");
     syncFromServer();
   }
 

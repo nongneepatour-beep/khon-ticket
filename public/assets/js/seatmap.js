@@ -10,11 +10,6 @@ const SeatMap = (() => {
     onToggleSeat = onToggle;
     container.replaceChildren();
 
-    const stage = document.createElement("div");
-    stage.className = "stage";
-    stage.textContent = "เวทีการแสดงโขน";
-    container.appendChild(stage);
-
     const groups = document.createElement("div");
     groups.className = "seat-groups";
 
@@ -28,24 +23,39 @@ const SeatMap = (() => {
 
       const zones = tierIds.map(id => SEAT_LAYOUT.find(z => z.id === id)).filter(Boolean);
       const hasAisleZone = zones.some(zone => zone.type === "aisle");
+      const isVipTier = zones.some(zone => zone.type === "vip");
 
       const tierEl = document.createElement("div");
       tierEl.className = hasAisleZone ? "seat-tier" : "seat-tier seat-tier-with-aisles";
+      if (isVipTier) tierEl.classList.add("seat-tier-with-stage");
+
+      if (isVipTier) {
+        // ป้ายเวทีวางในแถวกริดที่ 1 คอลัมน์เดียวกับโซน B1 VIP กลาง (คอลัมน์ที่ 3) ให้อยู่ตรงกันเป๊ะเสมอ
+        const stage = document.createElement("div");
+        stage.className = "stage";
+        stage.style.gridRow = "1";
+        stage.style.gridColumn = "3";
+        stage.textContent = "เวทีการแสดงโขน";
+        tierEl.appendChild(stage);
+      }
 
       zones.forEach((zone, index) => {
+        let cell;
         if (zone.type === "aisle") {
-          const aisleCol = document.createElement("div");
-          aisleCol.className = "aisle-col";
-          aisleCol.innerHTML = '<span class="aisle-note">ทางเดิน</span>';
-          tierEl.appendChild(aisleCol);
-          return;
+          cell = document.createElement("div");
+          cell.className = "aisle-col";
+          cell.innerHTML = '<span class="aisle-note">ทางเดิน</span>';
+        } else {
+          cell = buildZoneCard(zone);
         }
-
-        tierEl.appendChild(buildZoneCard(zone));
+        if (isVipTier) cell.style.gridRow = "2"; // การ์ดโซนจริงอยู่แถวกริดที่ 2 (ใต้ป้ายเวที)
+        tierEl.appendChild(cell);
 
         // แทรกป้าย "ช่องทางเดิน" แนวตั้งระหว่างการ์ดโซน เฉพาะแถวที่ไม่มีทางเดินกลางอยู่แล้ว (VIP/เขียว/เหลือง)
         if (!hasAisleZone && index < zones.length - 1) {
-          tierEl.appendChild(buildAisleDivider());
+          const divider = buildAisleDivider();
+          if (isVipTier) divider.style.gridRow = "2";
+          tierEl.appendChild(divider);
         }
       });
 

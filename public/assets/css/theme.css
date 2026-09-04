@@ -113,6 +113,11 @@ body {
 .payment-card:has(input:checked) { border-color: var(--gold-soft); background: rgba(213, 168, 61, .16); }
 .payment-card input { accent-color: var(--gold-soft); }
 
+.payment-detail-panel { border: 1px solid rgba(213, 168, 61, .35); border-radius: .75rem; padding: 1rem; background: rgba(0, 0, 0, .2); }
+.payment-detail-qr { background: rgba(255, 255, 255, .96); color: #1a1300; }
+.payment-detail-qr p { color: #1a1300; }
+.bank-badge { flex: none; background: #0a5687; color: #fff; font-weight: 800; padding: .5rem .75rem; border-radius: .5rem; }
+
 .notice { padding: .8rem 1rem; border-radius: .75rem; font-size: .9rem; }
 .notice-info { color: #ffebb0; border: 1px solid rgba(213, 168, 61, .37); background: rgba(213, 168, 61, .09); }
 .notice-success { color: #c9ffe2; border: 1px solid rgba(99, 211, 153, .5); background: rgba(46, 125, 89, .18); }
