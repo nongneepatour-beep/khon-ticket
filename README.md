@@ -69,7 +69,7 @@ khon-ticket/
 สร้างอัตโนมัติโดย `Code.gs` เมื่อมีการจองครั้งแรก:
 
 `booking_id, created_at, seats, seat_zones, seat_count, total_price, first_name, last_name,
-phone, email, payment_method, payment_amount_declared, slip_drive_file_id, slip_url,
+phone, payment_method, payment_amount_declared, slip_drive_file_id, slip_url,
 booking_status, reject_reason, updated_at`
 
 - `seats` = รหัสที่นั่งคั่นด้วย `|` (อ้างอิง `id` ใน `SEAT_LAYOUT`)

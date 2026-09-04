@@ -154,7 +154,7 @@
         <div class="col-sm-6"><div class="stat-box"><div class="label">เลขที่การจอง</div><div class="value fs-6">${esc(record.booking_id)}</div></div></div>
         <div class="col-sm-6"><div class="stat-box"><div class="label">สถานะ</div><div class="value fs-6">${esc(record.booking_status)}</div></div></div>
         <div class="col-sm-6"><div class="stat-box"><div class="label">ผู้จอง</div><div class="value fs-6">${esc(record.first_name)} ${esc(record.last_name)}</div></div></div>
-        <div class="col-sm-6"><div class="stat-box"><div class="label">เบอร์โทร / อีเมล</div><div class="value fs-6">${esc(record.phone)}<br>${esc(record.email)}</div></div></div>
+        <div class="col-sm-6"><div class="stat-box"><div class="label">เบอร์โทรศัพท์</div><div class="value fs-6">${esc(record.phone)}</div></div></div>
         <div class="col-sm-6"><div class="stat-box"><div class="label">ที่นั่ง</div><div class="value fs-6">${esc(record.seats)}</div></div></div>
         <div class="col-sm-6"><div class="stat-box"><div class="label">ยอดที่ต้องชำระ / ที่แจ้ง</div><div class="value fs-6">${money(record.total_price)} / ${money(record.payment_amount_declared)}</div></div></div>
       </div>`;

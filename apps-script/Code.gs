@@ -14,7 +14,7 @@ const LOCKED_STATUSES = ["รอตรวจสอบการชำระเง
 
 const HEADERS = [
   "booking_id", "created_at", "seats", "seat_zones", "seat_count", "total_price",
-  "first_name", "last_name", "phone", "email", "payment_method", "payment_amount_declared",
+  "first_name", "last_name", "phone", "payment_method", "payment_amount_declared",
   "slip_drive_file_id", "slip_url", "booking_status", "reject_reason", "updated_at"
 ];
 
@@ -66,7 +66,7 @@ function handleGetSeats_() {
 
 /** สร้างรายการจองใหม่ พร้อมตรวจที่นั่งชนกันซ้ำฝั่งเซิร์ฟเวอร์ (authoritative) และอัปโหลดสลิปขึ้น Drive */
 function handleCreateBooking_(record) {
-  const requiredFields = ["booking_id", "seats", "first_name", "last_name", "phone", "email", "payment_method", "total_price"];
+  const requiredFields = ["booking_id", "seats", "first_name", "last_name", "phone", "payment_method", "total_price"];
   for (const field of requiredFields) {
     if (!record[field] && record[field] !== 0) return { ok: false, message: "ข้อมูลไม่ครบถ้วน: " + field };
   }

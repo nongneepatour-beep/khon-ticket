@@ -72,7 +72,7 @@
   }
 
   function clearFieldErrors() {
-    ["first-name", "last-name", "phone", "email", "payment-method", "payment-amount", "payment-slip", "seats"].forEach(id =>
+    ["first-name", "last-name", "phone", "payment-method", "payment-amount", "payment-slip", "seats"].forEach(id =>
       showFieldError(id, "")
     );
   }
@@ -93,7 +93,6 @@
       firstName: document.getElementById("first-name").value.trim(),
       lastName: document.getElementById("last-name").value.trim(),
       phone: document.getElementById("phone").value.trim(),
-      email: document.getElementById("email").value.trim(),
       paymentMethod: document.querySelector('input[name="payment-method"]:checked')?.value || "",
       paymentAmount: Number(document.getElementById("payment-amount").value)
     };
@@ -104,7 +103,6 @@
     if (!values.firstName) errors["first-name"] = "กรุณากรอกชื่อ";
     if (!values.lastName) errors["last-name"] = "กรุณากรอกนามสกุล";
     if (!/^0\d{8,9}$/.test(values.phone.replace(/[-\s]/g, ""))) errors["phone"] = "กรุณากรอกเบอร์โทรศัพท์ไทยให้ถูกต้อง";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) errors["email"] = "กรุณากรอกอีเมลให้ถูกต้อง";
     if (!values.paymentMethod) errors["payment-method"] = "กรุณาเลือกวิธีชำระเงิน";
     if (seats.length === 0) errors["seats"] = "กรุณาเลือกที่นั่งอย่างน้อย 1 ที่นั่ง";
     if (values.paymentAmount !== total) errors["payment-amount"] = `กรุณาระบุยอด ${total} บาทให้ตรงกับยอดรวม`;
@@ -248,7 +246,6 @@
       first_name: check.values.firstName,
       last_name: check.values.lastName,
       phone: check.values.phone,
-      email: check.values.email,
       payment_method: check.values.paymentMethod,
       payment_amount_declared: check.values.paymentAmount,
       slip_filename: paymentSlip.name,
