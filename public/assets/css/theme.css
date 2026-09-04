@@ -159,3 +159,8 @@ footer { text-align: center; color: #8f8365; font-size: .82rem; padding: 2rem 0 
   .content-shell { padding: .8rem; }
   .booking-confirm dl { grid-template-columns: 1fr; }
 }
+
+@media (max-width: 480px) {
+  /* จอแคบมาก: การ์ดราคาเรียง 2 คอลัมน์แทนที่จะเรียงต่อกันเป็นแถวเดียวยาวๆ */
+  .price-grid { grid-template-columns: repeat(2, 1fr); }
+}

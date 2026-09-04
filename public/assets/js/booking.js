@@ -329,6 +329,14 @@
     updateSyncStatus("เชื่อมต่อ Google Sheets แล้ว · ข้อมูลที่นั่งอัปเดตล่าสุด", "success");
   }
 
+  // ผังที่นั่งกว้างกว่าจอ (โดยเฉพาะมือถือ) — เลื่อนให้เห็นกึ่งกลางผัง (โซน B1 กลาง) เป็นค่าเริ่มต้นเสมอ
+  // แทนที่จะเริ่มที่ขอบซ้ายสุด (โซน C1 ฝั่งซ้าย) ผู้ใช้ค่อยเลื่อนซ้าย-ขวาเองจากตรงนี้
+  function centerSeatMapScroll() {
+    const scrollEl = document.querySelector(".seat-map-scroll");
+    if (!scrollEl) return;
+    scrollEl.scrollLeft = (scrollEl.scrollWidth - scrollEl.clientWidth) / 2;
+  }
+
   let pollTimer = null;
   function startPolling() {
     if (pollTimer) clearInterval(pollTimer);
@@ -347,6 +355,7 @@
     SeatMap.renderPriceLegend(priceLegendEl);
     refreshSeatView();
     updateSummary();
+    centerSeatMapScroll();
     await syncFromServer();
     startPolling();
   });

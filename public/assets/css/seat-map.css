@@ -3,7 +3,10 @@
    ========================================================================== */
 
 .seat-map-frame { border: 1px solid var(--line); border-radius: 1rem; background: rgba(0, 0, 0, .22); padding: .5rem; }
-.seat-map-scroll { overflow-x: auto; padding: .3rem .15rem 1rem; }
+.seat-map-scroll {
+  overflow-x: auto; padding: .3rem .15rem 1rem;
+  -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scroll-behavior: smooth;
+}
 .seat-map { width: 100%; min-width: 780px; padding: 1rem; }
 
 .stage {
@@ -59,4 +62,11 @@
 
 @media (max-width: 900px) {
   .seat-map { min-width: 720px; }
+}
+
+/* มือถือ: ที่นั่งแตะง่ายขึ้นเล็กน้อย และช่องทางเดินแนวตั้งแคบลงอีกนิดให้เหมาะกับจอแคบ */
+@media (max-width: 480px) {
+  .seat { width: 22px; height: 23px; font-size: 9px; }
+  .seat.is-booked { font-size: 11px; }
+  .seat-tier-with-aisles { grid-template-columns: minmax(min-content, 1fr) 1.1rem minmax(min-content, 1.7fr) 1.1rem minmax(min-content, 1fr); }
 }
