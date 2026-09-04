@@ -5,7 +5,7 @@
 
 /* วาง URL Web App ของ Google Apps Script ที่ได้หลัง Deploy (ลงท้ายด้วย /exec)
    ดูวิธีสร้างและ deploy ได้ในไฟล์ README.md ที่ root ของโปรเจกต์ */
-const API_URL = "https://script.google.com/macros/s/AKfycbynu6NCN47BHQ_4pZnIylC2vLswgo5-VpS6bcojb-ui_XACSzUWk0Wgl0OeNTlFjeasyg/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbw6Dg39-XA5N2gSIlahzDPK3NuK9Mh1ehC6y95Dh483RYQPxPaV1Cp3izonS3F4EK61aw/exec";
 
 /* ข้อมูลการแสดง (ชื่อเรื่อง/สถานที่) — แสดงผลบนหน้าเว็บเฉยๆ ไม่กระทบ logic การล็อกที่นั่ง */
 const SHOW_INFO = {
