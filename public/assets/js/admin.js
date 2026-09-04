@@ -17,7 +17,15 @@
   const logoutBtn = document.getElementById("logout-btn");
 
   const statusFilter = document.getElementById("status-filter");
+  const showtimeFilter = document.getElementById("showtime-filter");
   const searchInput = document.getElementById("search-booking");
+
+  SHOWTIMES.forEach(st => {
+    const option = document.createElement("option");
+    option.value = st.id;
+    option.textContent = st.label;
+    showtimeFilter.appendChild(option);
+  });
   const refreshBtn = document.getElementById("refresh-btn");
   const adminMessage = document.getElementById("admin-message");
   const pendingCountEl = document.getElementById("pending-count");
@@ -109,9 +117,11 @@
 
   function renderList() {
     const filter = statusFilter.value;
+    const showtimeId = showtimeFilter.value;
     const searchTerm = searchInput.value.trim().toLowerCase();
     const sorted = [...records].sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
     let visible = filter === "all" ? sorted : sorted.filter(r => r.booking_status === filter);
+    if (showtimeId !== "all") visible = visible.filter(r => r.showtime_id === showtimeId);
     if (searchTerm) visible = visible.filter(r => String(r.booking_id || "").toLowerCase().includes(searchTerm));
     const pendingCount = sorted.filter(r => r.booking_status === "รอตรวจสอบการชำระเงิน").length;
     pendingCountEl.textContent = `${pendingCount} รายการ`;
@@ -131,6 +141,7 @@
           <span class="status-pill ${statusClass(record.booking_status)}">${esc(record.booking_status || "รอตรวจสอบการชำระเงิน")}</span>
         </div>
         <dl class="booking-grid mt-3">
+          <div><dt>รอบการแสดง</dt><dd>${esc(record.showtime_label)}</dd></div>
           <div><dt>ผู้จอง</dt><dd>${esc(record.first_name)} ${esc(record.last_name)}</dd></div>
           <div><dt>ที่นั่ง/โซน</dt><dd>${esc(record.seat_zones)} (${esc(record.seat_count)} ที่นั่ง)</dd></div>
           <div><dt>ยอดรวม</dt><dd>${money(record.total_price)}</dd></div>
@@ -153,6 +164,7 @@
       <div class="row g-3">
         <div class="col-sm-6"><div class="stat-box"><div class="label">เลขที่การจอง</div><div class="value fs-6">${esc(record.booking_id)}</div></div></div>
         <div class="col-sm-6"><div class="stat-box"><div class="label">สถานะ</div><div class="value fs-6">${esc(record.booking_status)}</div></div></div>
+        <div class="col-sm-6"><div class="stat-box"><div class="label">รอบการแสดง</div><div class="value fs-6">${esc(record.showtime_label)}</div></div></div>
         <div class="col-sm-6"><div class="stat-box"><div class="label">ผู้จอง</div><div class="value fs-6">${esc(record.first_name)} ${esc(record.last_name)}</div></div></div>
         <div class="col-sm-6"><div class="stat-box"><div class="label">เบอร์โทรศัพท์</div><div class="value fs-6">${esc(record.phone)}</div></div></div>
         <div class="col-sm-6"><div class="stat-box"><div class="label">ที่นั่ง</div><div class="value fs-6">${esc(record.seats)}</div></div></div>
@@ -220,6 +232,7 @@
   loginForm.addEventListener("submit", handleLogin);
   logoutBtn.addEventListener("click", handleLogout);
   statusFilter.addEventListener("change", renderList);
+  showtimeFilter.addEventListener("change", renderList);
   searchInput.addEventListener("input", renderList);
   refreshBtn.addEventListener("click", refreshList);
   approveBtn.addEventListener("click", () => updateStatus("อนุมัติแล้ว"));

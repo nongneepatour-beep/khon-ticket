@@ -13,7 +13,7 @@ const ADMIN_TOKEN_TTL_SECONDS = 6 * 60 * 60; // token แอดมินอย�
 const LOCKED_STATUSES = ["รอตรวจสอบการชำระเงิน", "อนุมัติแล้ว"];
 
 const HEADERS = [
-  "booking_id", "created_at", "seats", "seat_zones", "seat_count", "total_price",
+  "booking_id", "created_at", "showtime_id", "showtime_label", "seats", "seat_zones", "seat_count", "total_price",
   "first_name", "last_name", "phone", "payment_method", "payment_amount_declared",
   "slip_drive_file_id", "slip_url", "booking_status", "reject_reason", "updated_at"
 ];
@@ -57,16 +57,25 @@ function doPost(e) {
 
 /* --------------------------------- Public --------------------------------- */
 
-/** คืนแค่ "รหัสที่นั่ง" ที่ถูกล็อกแล้ว ไม่มีข้อมูลลูกค้าติดไปด้วย (ป้องกันข้อมูลรั่วไหล) */
+/** คืนรหัสที่นั่งที่ถูกล็อกแล้วของทุกรอบการแสดง แยกเป็น { showtimeId: [seatId, ...] }
+ *  ไม่มีข้อมูลลูกค้าติดไปด้วย (ป้องกันข้อมูลรั่วไหล) */
 function handleGetSeats_() {
   const sheet = getSheet_();
   const records = readAllRecords_(sheet);
-  return { ok: true, bookedSeatIds: getLockedSeatIds_(records) };
+  const bookedSeatsByShowtime = {};
+  records.forEach(record => {
+    if (!LOCKED_STATUSES.includes(record.booking_status)) return;
+    const key = record.showtime_id;
+    if (!key) return;
+    if (!bookedSeatsByShowtime[key]) bookedSeatsByShowtime[key] = [];
+    String(record.seats || "").split("|").map(s => s.trim()).filter(Boolean).forEach(id => bookedSeatsByShowtime[key].push(id));
+  });
+  return { ok: true, bookedSeatsByShowtime };
 }
 
-/** สร้างรายการจองใหม่ พร้อมตรวจที่นั่งชนกันซ้ำฝั่งเซิร์ฟเวอร์ (authoritative) และอัปโหลดสลิปขึ้น Drive */
+/** สร้างรายการจองใหม่ พร้อมตรวจที่นั่งชนกันซ้ำฝั่งเซิร์ฟเวอร์ (authoritative, เช็คเฉพาะรอบเดียวกัน) และอัปโหลดสลิปขึ้น Drive */
 function handleCreateBooking_(record) {
-  const requiredFields = ["booking_id", "seats", "first_name", "last_name", "phone", "payment_method", "total_price"];
+  const requiredFields = ["booking_id", "showtime_id", "seats", "first_name", "last_name", "phone", "payment_method", "total_price"];
   for (const field of requiredFields) {
     if (!record[field] && record[field] !== 0) return { ok: false, message: "ข้อมูลไม่ครบถ้วน: " + field };
   }
@@ -81,7 +90,9 @@ function handleCreateBooking_(record) {
       return { ok: false, message: "พบเลขที่การจองซ้ำ กรุณาลองใหม่อีกครั้ง" };
     }
 
-    const lockedSeatIds = new Set(getLockedSeatIds_(records));
+    // เช็คที่นั่งชนกันเฉพาะรายการที่เป็น "รอบการแสดงเดียวกัน" เท่านั้น ที่นั่งเดียวกันคนละรอบจองแยกกันได้อิสระ
+    const sameShowtimeRecords = records.filter(r => r.showtime_id === record.showtime_id);
+    const lockedSeatIds = new Set(getLockedSeatIds_(sameShowtimeRecords));
     const requestedSeatIds = String(record.seats).split("|").map(s => s.trim()).filter(Boolean);
     const conflictSeats = requestedSeatIds.filter(id => lockedSeatIds.has(id));
 
@@ -103,20 +114,21 @@ function handleCreateBooking_(record) {
     }
 
     const now = new Date().toISOString();
-    const row = HEADERS.map(key => {
-      if (key === "slip_drive_file_id") return slipDriveFileId;
-      if (key === "slip_url") return slipUrl;
-      if (key === "booking_status") return record.booking_status || "รอตรวจสอบการชำระเงิน";
-      if (key === "reject_reason") return "";
-      if (key === "updated_at") return now;
-      return record[key] !== undefined ? record[key] : "";
+    appendRecordRow_(sheet, {
+      ...record,
+      slip_drive_file_id: slipDriveFileId,
+      slip_url: slipUrl,
+      booking_status: record.booking_status || "รอตรวจสอบการชำระเงิน",
+      reject_reason: "",
+      updated_at: now
     });
-    sheet.appendRow(row);
 
     return {
       ok: true,
       record: {
         booking_id: record.booking_id,
+        showtime_id: record.showtime_id,
+        showtime_label: record.showtime_label,
         seats: record.seats,
         seat_count: record.seat_count,
         total_price: record.total_price,
@@ -168,11 +180,11 @@ function handleAdminUpdateStatus_(body) {
     header.forEach((key, i) => (record[key] = targetRow[i]));
 
     if (nextStatus === "อนุมัติแล้ว") {
-      const records = readAllRecords_(sheet).filter(r => r.booking_id !== body.booking_id);
+      const records = readAllRecords_(sheet).filter(r => r.booking_id !== body.booking_id && r.showtime_id === record.showtime_id);
       const lockedSeatIds = new Set(getLockedSeatIds_(records));
       const mySeats = String(record.seats).split("|").map(s => s.trim()).filter(Boolean);
       const conflict = mySeats.some(id => lockedSeatIds.has(id));
-      if (conflict) return { ok: false, message: "ไม่สามารถอนุมัติได้ เนื่องจากมีที่นั่งในรายการนี้ถูกจองโดยรายการอื่นไปแล้ว" };
+      if (conflict) return { ok: false, message: "ไม่สามารถอนุมัติได้ เนื่องจากมีที่นั่งในรอบนี้ถูกจองโดยรายการอื่นไปแล้ว" };
     }
 
     const now = new Date().toISOString();
@@ -204,8 +216,28 @@ function getSheet_() {
   return sheet;
 }
 
+/** สร้างหัวตารางถ้าชีตว่างเปล่า หรือ "เติม" คอลัมน์ที่ขาดต่อท้ายให้อัตโนมัติถ้าชีตเก่ามีหัวตารางไม่ครบ
+ *  (เช่น อัปเดตโค้ดมีคอลัมน์ใหม่ทีหลัง แต่ชีตเดิมสร้างไว้ก่อนหน้านั้น) กันข้อมูลคอลัมน์เพี้ยน/หลุดหาย */
 function ensureHeader_(sheet) {
-  if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(HEADERS);
+    return;
+  }
+  const width = sheet.getLastColumn();
+  const currentHeader = width > 0 ? sheet.getRange(1, 1, 1, width).getValues()[0] : [];
+  const missing = HEADERS.filter(key => currentHeader.indexOf(key) === -1);
+  if (missing.length) {
+    sheet.getRange(1, width + 1, 1, missing.length).setValues([missing]);
+  }
+}
+
+/** เขียนแถวใหม่โดยอ้างอิง "ชื่อคอลัมน์จริง" ในหัวตารางของชีต ไม่ใช่ลำดับใน HEADERS ตรงๆ
+ *  กันกรณีหัวตารางจริงในชีตเรียงคอลัมน์ไม่ตรงกับ HEADERS (เช่นเพิ่งเติมคอลัมน์ใหม่ต่อท้ายให้อัตโนมัติ) */
+function appendRecordRow_(sheet, valuesByKey) {
+  const width = sheet.getLastColumn();
+  const header = sheet.getRange(1, 1, 1, width).getValues()[0];
+  const row = header.map(key => (valuesByKey[key] !== undefined ? valuesByKey[key] : ""));
+  sheet.appendRow(row);
 }
 
 function readAllRecords_(sheet) {

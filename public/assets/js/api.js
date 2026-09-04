@@ -43,11 +43,17 @@ const Api = (() => {
   return {
     isConfigured,
 
-    /** รายชื่อ "รหัสที่นั่ง" ที่ถูกล็อกแล้วเท่านั้น (ไม่มีข้อมูลลูกค้า) — ใช้แสดงผลผังที่นั่งสาธารณะ */
+    /** รหัสที่นั่งที่ถูกล็อกแล้วของทุกรอบการแสดง แยกเป็น { showtimeId: [seatId, ...] } (ไม่มีข้อมูลลูกค้า)
+     *  — ใช้แสดงผลผังที่นั่งสาธารณะ */
     async getBookedSeats() {
       const result = await get({ action: "seats" });
       if (!result.ok) return result;
-      return { ok: true, bookedSeatIds: Array.isArray(result.bookedSeatIds) ? result.bookedSeatIds : [] };
+      return {
+        ok: true,
+        bookedSeatsByShowtime: result.bookedSeatsByShowtime && typeof result.bookedSeatsByShowtime === "object"
+          ? result.bookedSeatsByShowtime
+          : {}
+      };
     },
 
     /** ส่งคำขอจองใหม่ */

@@ -7,6 +7,8 @@
   const esc = value =>
     String(value || "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[ch]));
 
+  const showtimeOptionsEl = document.getElementById("showtime-options");
+  const summaryShowtimeEl = document.getElementById("summary-showtime");
   const seatMapEl = document.getElementById("seat-map");
   const priceLegendEl = document.getElementById("price-legend");
   const liveSeatCountEl = document.getElementById("live-seat-count");
@@ -27,15 +29,53 @@
   const bookingTicketEl = document.getElementById("booking-ticket");
   const saveTicketBtn = document.getElementById("save-ticket-image");
 
+  let selectedShowtimeId = "";
   let selectedSeats = new Set();
-  let bookedSeats = Storage.getBookedSeats(); // เริ่มจาก cache ในเครื่องก่อน (แสดงผลได้ทันที)
+  let bookedSeatsMap = Storage.getBookedSeatsMap(); // เริ่มจาก cache ในเครื่องก่อน (แสดงผลได้ทันที) — { showtimeId: [seatId, ...] }
+  let bookedSeats = new Set(); // ที่นั่งจองแล้วของ "รอบที่กำลังเลือกอยู่" เท่านั้น
   let paymentSlip = null; // { name, type, data }
 
   function getSelectedSeatObjects() {
     return [...selectedSeats].map(id => SEAT_BY_ID.get(id)).filter(Boolean).sort((a, b) => a.id.localeCompare(b.id));
   }
 
+  function recomputeBookedSeats() {
+    bookedSeats = selectedShowtimeId ? new Set(bookedSeatsMap[selectedShowtimeId] || []) : new Set();
+  }
+
+  function renderShowtimeOptions() {
+    showtimeOptionsEl.replaceChildren();
+    SHOWTIMES.forEach(st => {
+      const col = document.createElement("div");
+      col.className = "col-sm-6";
+      col.innerHTML = `
+        <label class="payment-card w-100">
+          <input type="radio" name="showtime" value="${st.id}">
+          <span>${esc(st.label)}</span>
+        </label>`;
+      col.querySelector("input").addEventListener("change", () => selectShowtime(st.id));
+      showtimeOptionsEl.appendChild(col);
+    });
+  }
+
+  function selectShowtime(showtimeId) {
+    selectedShowtimeId = showtimeId;
+    showFieldError("showtime", "");
+    selectedSeats.clear(); // ที่นั่งของคนละรอบล็อกอิสระจากกัน เลือกรอบใหม่ต้องเริ่มเลือกที่นั่งใหม่
+    recomputeBookedSeats();
+    refreshSeatView();
+    updateSummary();
+    const st = SHOWTIME_BY_ID.get(showtimeId);
+    summaryShowtimeEl.textContent = `รอบที่เลือก: ${st ? st.label : ""}`;
+    summaryShowtimeEl.className = "rounded-3 px-3 py-2 mb-3 notice notice-success";
+  }
+
   function toggleSeat(id) {
+    if (!selectedShowtimeId) {
+      showFieldError("showtime", "กรุณาเลือกรอบการแสดงก่อนเลือกที่นั่ง");
+      document.getElementById("showtime-section").scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
     if (bookedSeats.has(id)) return;
     selectedSeats.has(id) ? selectedSeats.delete(id) : selectedSeats.add(id);
     refreshSeatView();
@@ -52,7 +92,9 @@
 
     selectedCountEl.textContent = seats.length;
     grandTotalEl.textContent = money(total);
-    liveSeatCountEl.textContent = `จองแล้ว ${bookedSeats.size} ที่นั่ง · เลือกอยู่ ${seats.length} ที่นั่ง`;
+    liveSeatCountEl.textContent = selectedShowtimeId
+      ? `จองแล้ว ${bookedSeats.size} ที่นั่ง · เลือกอยู่ ${seats.length} ที่นั่ง`
+      : "กรุณาเลือกรอบการแสดงก่อน";
 
     seatListEl.querySelectorAll(".seat-row-item").forEach(el => el.remove());
     emptySelectionEl.classList.toggle("hidden", seats.length > 0);
@@ -72,7 +114,7 @@
   }
 
   function clearFieldErrors() {
-    ["first-name", "last-name", "phone", "payment-method", "payment-amount", "payment-slip", "seats"].forEach(id =>
+    ["showtime", "first-name", "last-name", "phone", "payment-method", "payment-amount", "payment-slip", "seats"].forEach(id =>
       showFieldError(id, "")
     );
   }
@@ -100,6 +142,7 @@
     const total = seats.reduce((sum, seat) => sum + seat.price, 0);
     const errors = {};
 
+    if (!selectedShowtimeId) errors["showtime"] = "กรุณาเลือกรอบการแสดง";
     if (!values.firstName) errors["first-name"] = "กรุณากรอกชื่อ";
     if (!values.lastName) errors["last-name"] = "กรุณากรอกนามสกุล";
     if (!/^0\d{8,9}$/.test(values.phone.replace(/[-\s]/g, ""))) errors["phone"] = "กรุณากรอกเบอร์โทรศัพท์ไทยให้ถูกต้อง";
@@ -236,9 +279,12 @@
 
     const seatIds = check.seats.map(seat => seat.id);
     const bookingId = createBookingId();
+    const showtime = SHOWTIME_BY_ID.get(selectedShowtimeId);
     const record = {
       booking_id: bookingId,
       created_at: new Date().toISOString(),
+      showtime_id: selectedShowtimeId,
+      showtime_label: showtime ? showtime.label : "",
       seats: seatIds.join("|"),
       seat_zones: [...new Set(check.seats.map(seat => seat.zoneName))].join(", "),
       seat_count: check.seats.length,
@@ -255,8 +301,9 @@
     };
 
     // บันทึกแบบ optimistic ในเครื่องก่อน ผู้ใช้เห็นผลทันทีแม้เน็ตช้า
-    Storage.addBookedSeats(seatIds);
+    Storage.addBookedSeats(selectedShowtimeId, seatIds);
     Storage.addBooking(record);
+    bookedSeatsMap = Storage.getBookedSeatsMap();
     seatIds.forEach(id => bookedSeats.add(id));
     selectedSeats.clear();
     refreshSeatView();
@@ -273,12 +320,14 @@
 
     if (!result.ok && result.conflict) {
       // ที่นั่งชนกับรายการอื่นจริงบนเซิร์ฟเวอร์ — ต้อง rollback การจองนี้ทั้งหมด
-      Storage.removeBookedSeats(seatIds);
-      seatIds.forEach(id => bookedSeats.delete(id));
+      Storage.removeBookedSeats(selectedShowtimeId, seatIds);
       if (Array.isArray(result.bookedSeatIds)) {
-        bookedSeats = new Set(result.bookedSeatIds);
-        Storage.setBookedSeats(bookedSeats);
+        bookedSeatsMap[selectedShowtimeId] = result.bookedSeatIds;
+        Storage.setBookedSeatsMap(bookedSeatsMap);
+      } else {
+        bookedSeatsMap = Storage.getBookedSeatsMap();
       }
+      recomputeBookedSeats();
       refreshSeatView();
       updateSummary();
       bookingConfirmEl.classList.add("hidden");
@@ -303,7 +352,7 @@
   }
 
   function showConfirmation(record, syncState) {
-    document.getElementById("confirm-show-info").textContent = `${SHOW_INFO.title} · ${SHOW_INFO.venue} · ${SHOW_INFO.datetime}`;
+    document.getElementById("confirm-show-info").textContent = `${SHOW_INFO.title} · ${SHOW_INFO.venue} · ${record.showtime_label || ""}`;
     document.getElementById("confirm-booking-id").textContent = record.booking_id;
     document.getElementById("confirm-name").textContent = `${record.first_name} ${record.last_name}`;
     document.getElementById("confirm-phone").textContent = record.phone;
@@ -336,8 +385,9 @@
       updateSyncStatus(result.message || "ไม่สามารถเชื่อมต่อ Google Sheets ได้ในขณะนี้", "error");
       return;
     }
-    bookedSeats = new Set(result.bookedSeatIds);
-    Storage.setBookedSeats(bookedSeats);
+    bookedSeatsMap = result.bookedSeatsByShowtime;
+    Storage.setBookedSeatsMap(bookedSeatsMap);
+    recomputeBookedSeats();
 
     // ถ้าที่นั่งที่ผู้ใช้กำลังเลือกอยู่ถูกคนอื่นจองไปพอดี ต้องเอาออกจากรายการที่เลือก
     let removed = false;
@@ -373,8 +423,9 @@
 
   document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("show-title").textContent = SHOW_INFO.title;
-    document.getElementById("show-datetime").textContent = `${SHOW_INFO.venue} · ${SHOW_INFO.datetime}`;
+    document.getElementById("show-datetime").textContent = `${SHOW_INFO.venue} · ${SHOW_INFO.summary}`;
 
+    renderShowtimeOptions();
     SeatMap.render(seatMapEl, { onToggle: toggleSeat });
     SeatMap.renderPriceLegend(priceLegendEl);
     refreshSeatView();

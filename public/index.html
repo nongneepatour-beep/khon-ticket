@@ -29,6 +29,15 @@
       </header>
 
       <main>
+        <!-- ===== เลือกรอบการแสดง ===== -->
+        <section id="showtime-section" class="glass p-4 mb-4">
+          <h2 class="h5 text-gold fw-bold mb-0">เลือกรอบการแสดง</h2>
+          <p class="text-white-50 mb-0">เลือกวันและรอบที่ต้องการก่อน แล้วจึงเลือกที่นั่งได้</p>
+          <div class="gold-rule"></div>
+          <div id="showtime-options" class="row g-2"></div>
+          <p id="showtime-error" class="field-error"></p>
+        </section>
+
         <!-- ===== Legend + ราคา ===== -->
         <section class="glass p-4 mb-4">
           <h2 class="h5 text-gold fw-bold">สถานะที่นั่งและราคาบัตร</h2>
@@ -64,6 +73,7 @@
               <button id="clear-selection" type="button" class="btn btn-outline btn-sm">ล้างที่เลือก</button>
             </div>
             <div class="gold-rule"></div>
+            <p id="summary-showtime" class="rounded-3 px-3 py-2 mb-3 notice notice-info">ยังไม่ได้เลือกรอบการแสดง</p>
             <div class="row g-3 mb-3">
               <div class="col-6"><div class="stat-box"><div class="label">จำนวนที่เลือก</div><div id="selected-count" class="value">0</div></div></div>
               <div class="col-6"><div class="stat-box"><div class="label">ยอดรวมทั้งหมด</div><div id="grand-total" class="value">0 บาท</div></div></div>
