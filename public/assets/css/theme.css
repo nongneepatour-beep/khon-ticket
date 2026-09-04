@@ -1,0 +1,152 @@
+/* ==========================================================================
+   theme.css — ธีมโขนไทย (ดำ–ทอง) + override ตัวแปรสีของ Bootstrap 5
+   โหลดหลัง bootstrap.min.css เสมอ
+   ========================================================================== */
+
+:root {
+  --ink: #0a0906;
+  --paper: #fff5d5;
+  --gold: #d5a83d;
+  --gold-soft: #f8d77a;
+  --line: rgba(232, 192, 91, .3);
+  --glass: rgba(26, 23, 13, .78);
+  --muted: #d9cca7;
+
+  --seat-available: #9f2630;
+  --seat-available-hover: #ca3643;
+  --seat-booked: #2f7d59;
+  --seat-booked-border: #74d7a5;
+
+  /* override ตัวแปร Bootstrap ให้เข้าธีม */
+  --bs-body-bg: var(--ink);
+  --bs-body-color: var(--paper);
+  --bs-border-color: var(--line);
+  --bs-link-color: var(--gold-soft);
+  --bs-link-hover-color: var(--gold);
+}
+
+body {
+  font-family: "Sarabun", "Noto Sans Thai", Tahoma, sans-serif;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* พื้นหลังธีมโขน: ไล่สีทอง-แดงเข้ม + ลวดลายจุด/สี่เหลี่ยมข้าวหลามตัดจางๆ ชวนนึกถึงลายผ้าปักโขน */
+.khon-page {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 50% -8%, rgba(207, 158, 45, .24), transparent 34rem),
+    radial-gradient(ellipse at 8% 20%, rgba(131, 44, 39, .18), transparent 26rem),
+    radial-gradient(ellipse at 92% 30%, rgba(131, 44, 39, .18), transparent 26rem),
+    linear-gradient(180deg, #16150e 0%, #070706 46%, #141108 100%);
+}
+.khon-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  opacity: .12;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 50% 0%, transparent 0 8px, #d5a83d 9px 10px, transparent 11px),
+    linear-gradient(45deg, transparent 45%, rgba(213, 168, 61, .5) 46% 54%, transparent 55%);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, black, transparent 70%);
+}
+
+.content-shell { position: relative; z-index: 1; max-width: 1360px; margin: 0 auto; padding: 1.25rem; }
+
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, .34), inset 0 1px rgba(255, 239, 187, .08);
+  backdrop-filter: blur(12px);
+  border-radius: 1.25rem;
+}
+.gold-rule { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1rem 0; }
+.text-gold { color: var(--gold-soft) !important; }
+
+/* ---------- ปุ่มธีม (ใช้คู่กับ Bootstrap .btn) ---------- */
+.btn-gold { background: linear-gradient(135deg, #f1cf67, #bc8520); color: #201704 !important; border: 1px solid #f6d879; font-weight: 700; }
+.btn-gold:hover { filter: brightness(1.08); transform: translateY(-1px); color: #201704; }
+.btn-outline { background: rgba(213, 168, 61, .08); border: 1px solid rgba(231, 190, 78, .62); color: var(--gold-soft); font-weight: 600; }
+.btn-outline:hover { background: rgba(213, 168, 61, .18); color: var(--gold-soft); }
+
+/* ---------- Hero ---------- */
+.hero-text { position: relative; padding-left: 1.15rem; }
+.hero-text::before {
+  content: ""; position: absolute; left: 0; top: .2rem; bottom: .2rem; width: 3px; border-radius: 3px;
+  background: linear-gradient(180deg, var(--gold), var(--gold-soft));
+}
+.eyebrow { color: var(--gold-soft); letter-spacing: .18em; font-size: .82rem; font-weight: 700; text-transform: uppercase; }
+
+/* ---------- Legend + ราคา ---------- */
+.legend-chip { width: 17px; height: 17px; border-radius: 4px; display: inline-block; border: 1px solid rgba(255, 255, 255, .25); vertical-align: middle; }
+.chip-available { background: var(--seat-available); }
+.chip-booked { background: var(--seat-booked); border-color: var(--seat-booked-border); }
+.chip-selected { background: var(--seat-available); border: 3px solid var(--gold-soft); }
+
+.price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .75rem; }
+.price-card { border-radius: .85rem; padding: .8rem .9rem; border: 1px solid rgba(255, 255, 255, .12); background: rgba(255, 255, 255, .03); transition: .2s ease; }
+.price-card:hover { transform: translateY(-2px); border-color: rgba(213, 168, 61, .4); background: rgba(255, 255, 255, .05); }
+.price-card .zone-name { display: flex; align-items: center; gap: .5rem; font-size: .85rem; font-weight: 700; }
+.price-card .zone-price { margin-top: .4rem; font-size: 1.3rem; font-weight: 800; color: var(--gold-soft); }
+
+/* ---------- ฟอร์ม ---------- */
+.form-control, .form-select {
+  background: rgba(6, 6, 4, .72); border: 1px solid rgba(213, 168, 61, .38); color: #fff4d6;
+}
+.form-control:focus, .form-select:focus {
+  background: rgba(6, 6, 4, .85); border-color: var(--gold-soft); color: #fff4d6;
+  box-shadow: 0 0 0 .2rem rgba(248, 215, 122, .25);
+}
+.form-control::placeholder { color: #b9aa83; }
+.form-label { color: var(--gold-soft); font-weight: 700; font-size: .92rem; }
+.field-error { min-height: 1.1rem; margin-top: .25rem; color: #ffb0a8; font-size: .8rem; }
+
+.payment-card { display: flex; align-items: center; gap: .6rem; padding: .7rem .85rem; border: 1px solid rgba(213, 168, 61, .28); border-radius: .7rem; background: rgba(255, 255, 255, .03); cursor: pointer; }
+.payment-card:has(input:checked) { border-color: var(--gold-soft); background: rgba(213, 168, 61, .16); }
+.payment-card input { accent-color: var(--gold-soft); }
+
+.notice { padding: .8rem 1rem; border-radius: .75rem; font-size: .9rem; }
+.notice-info { color: #ffebb0; border: 1px solid rgba(213, 168, 61, .37); background: rgba(213, 168, 61, .09); }
+.notice-success { color: #c9ffe2; border: 1px solid rgba(99, 211, 153, .5); background: rgba(46, 125, 89, .18); }
+.notice-error { color: #ffd0cb; border: 1px solid rgba(255, 131, 121, .5); background: rgba(159, 38, 48, .18); }
+.hidden { display: none !important; }
+
+.summary-list { border-radius: .85rem; background: rgba(0, 0, 0, .25); border: 1px solid rgba(255, 255, 255, .1); max-height: 13rem; overflow-y: auto; }
+.summary-list .row { display: flex; justify-content: space-between; gap: .75rem; padding: .5rem .75rem; margin: 0; border-bottom: 1px solid rgba(255, 255, 255, .08); font-size: .88rem; }
+.summary-list .empty { color: #bcae89; padding: 1rem; text-align: center; }
+.stat-box { border-radius: .85rem; padding: .75rem; background: rgba(0, 0, 0, .3); border: 1px solid rgba(255, 255, 255, .1); }
+.stat-box .label { color: #cdbf97; font-size: .85rem; }
+.stat-box .value { font-size: 1.5rem; font-weight: 800; color: var(--gold-soft); }
+
+.booking-confirm { border: 1px solid rgba(99, 211, 153, .45); border-radius: 1rem; padding: 1.1rem; background: rgba(46, 125, 89, .12); }
+.booking-confirm dl { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem 1rem; margin: .75rem 0 0; }
+.booking-confirm dt { color: #bcae89; font-size: .78rem; }
+.booking-confirm dd { margin: 0; color: #fff4d6; font-size: .92rem; overflow-wrap: anywhere; }
+
+/* ---------- Admin ---------- */
+.status-pill { display: inline-flex; align-items: center; border-radius: 999px; padding: .25rem .65rem; font-size: .78rem; font-weight: 700; }
+.status-pending { background: rgba(213, 168, 61, .16); border: 1px solid rgba(248, 215, 122, .48); color: #ffe9a9; }
+.status-approved { background: rgba(46, 125, 89, .28); border: 1px solid rgba(99, 211, 153, .5); color: #c9ffe2; }
+.status-rejected { background: rgba(159, 38, 48, .3); border: 1px solid rgba(255, 131, 121, .48); color: #ffd0cb; }
+
+.booking-card { border: 1px solid rgba(213, 168, 61, .28); background: rgba(0, 0, 0, .22); border-radius: 1rem; padding: 1rem; margin-bottom: 1rem; }
+.booking-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem 1rem; margin: 0; }
+.booking-grid dt { color: #bcae89; font-size: .78rem; }
+.booking-grid dd { margin: 0; color: #fff4d6; font-size: .88rem; overflow-wrap: anywhere; }
+
+.slip-image { width: 100%; max-height: 380px; object-fit: contain; border-radius: .75rem; background: #070706; }
+
+.modal-content { background: #17140b; color: var(--paper); border: 1px solid var(--gold); border-radius: 1rem; }
+.modal-header, .modal-footer { border-color: var(--line); }
+.btn-close { filter: invert(1) grayscale(1) brightness(1.6); }
+
+footer { text-align: center; color: #8f8365; font-size: .82rem; padding: 2rem 0 1rem; }
+
+@media (max-width: 900px) {
+  .content-shell { padding: .8rem; }
+  .booking-confirm dl { grid-template-columns: 1fr; }
+}

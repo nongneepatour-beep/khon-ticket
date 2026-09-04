@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="th" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบจองตั๋วชมโขนไทย</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/seat-map.css">
+</head>
+<body>
+  <div class="khon-page">
+    <div class="content-shell">
+
+      <!-- ===== Header ===== -->
+      <header class="pt-4 pb-4">
+        <div class="glass p-4 p-md-5 d-flex flex-column flex-md-row gap-4 align-items-md-center justify-content-between">
+          <div class="hero-text">
+            <p class="eyebrow mb-2">การแสดงโขน</p>
+            <h1 id="show-title" class="h2 fw-bold text-white mb-2">รามเกียรติ์</h1>
+            <p id="show-datetime" class="text-white-50 mb-0"></p>
+          </div>
+          <button id="scroll-to-seats" type="button" class="btn btn-gold px-4 py-3 rounded-3">
+            เลือกที่นั่ง
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <!-- ===== Legend + ราคา ===== -->
+        <section class="glass p-4 mb-4">
+          <h2 class="h5 text-gold fw-bold">สถานะที่นั่งและราคาบัตร</h2>
+          <p class="text-white-50 mb-0">ที่นั่งที่จองแล้วจะแสดงเป็นสีเขียวและกดเลือกซ้ำไม่ได้</p>
+          <div class="gold-rule"></div>
+          <div class="d-flex flex-wrap gap-4 mb-3">
+            <span><span class="legend-chip chip-available"></span> ว่าง · กดเพื่อเลือก</span>
+            <span><span class="legend-chip chip-booked"></span> จองแล้ว · เลือกไม่ได้</span>
+            <span><span class="legend-chip chip-selected"></span> กำลังเลือก · ขอบทอง</span>
+          </div>
+          <div id="price-legend" class="price-grid"></div>
+        </section>
+
+        <!-- ===== ผังที่นั่ง (เฟรมเดียว) ===== -->
+        <section id="seat-section" class="glass p-3 p-md-4 mb-4">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 px-2 pb-3">
+            <h2 class="h5 text-gold fw-bold mb-0">ผังที่นั่งการแสดง</h2>
+            <span id="live-seat-count" class="text-gold fw-bold small"></span>
+          </div>
+          <p id="sync-status" class="notice notice-info mx-2"></p>
+          <div class="seat-map-frame">
+            <div class="seat-map-scroll">
+              <div id="seat-map" class="seat-map"></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="row g-4 align-items-start">
+          <!-- ===== สรุปรายการจอง ===== -->
+          <section class="col-lg-6 glass p-4">
+            <div class="d-flex justify-content-between align-items-center">
+              <h2 class="h5 text-gold fw-bold mb-0">สรุปรายการจอง</h2>
+              <button id="clear-selection" type="button" class="btn btn-outline btn-sm">ล้างที่เลือก</button>
+            </div>
+            <div class="gold-rule"></div>
+            <div class="row g-3 mb-3">
+              <div class="col-6"><div class="stat-box"><div class="label">จำนวนที่เลือก</div><div id="selected-count" class="value">0</div></div></div>
+              <div class="col-6"><div class="stat-box"><div class="label">ยอดรวมทั้งหมด</div><div id="grand-total" class="value">0 บาท</div></div></div>
+            </div>
+            <h3 class="h6 text-gold fw-bold mb-2">รายการที่นั่ง</h3>
+            <div id="seat-list" class="summary-list">
+              <p id="empty-selection" class="empty">ยังไม่ได้เลือกที่นั่ง</p>
+            </div>
+          </section>
+
+          <!-- ===== ฟอร์มข้อมูลผู้จอง ===== -->
+          <section class="col-lg-6 glass p-4">
+            <h2 class="h5 text-gold fw-bold mb-1">ข้อมูลผู้จอง</h2>
+            <p class="text-white-50">กรอกข้อมูลให้ครบถ้วนและแนบสลิปเพื่อส่งคำขอจอง</p>
+
+            <form id="booking-form" novalidate class="mt-3">
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <label for="first-name" class="form-label">ชื่อ</label>
+                  <input id="first-name" class="form-control" type="text" autocomplete="given-name">
+                  <p id="first-name-error" class="field-error"></p>
+                </div>
+                <div class="col-sm-6">
+                  <label for="last-name" class="form-label">นามสกุล</label>
+                  <input id="last-name" class="form-control" type="text" autocomplete="family-name">
+                  <p id="last-name-error" class="field-error"></p>
+                </div>
+              </div>
+
+              <div class="row g-3 mt-1">
+                <div class="col-sm-6">
+                  <label for="phone" class="form-label">เบอร์โทรศัพท์</label>
+                  <input id="phone" class="form-control" type="tel" inputmode="tel" autocomplete="tel">
+                  <p id="phone-error" class="field-error"></p>
+                </div>
+                <div class="col-sm-6">
+                  <label for="email" class="form-label">อีเมล</label>
+                  <input id="email" class="form-control" type="email" autocomplete="email">
+                  <p id="email-error" class="field-error"></p>
+                </div>
+              </div>
+
+              <fieldset class="mt-3">
+                <legend class="form-label">วิธีชำระเงิน</legend>
+                <div class="d-grid gap-2">
+                  <label class="payment-card">
+                    <input type="radio" name="payment-method" value="พร้อมเพย์">
+                    <span>พร้อมเพย์</span>
+                  </label>
+                  <label class="payment-card">
+                    <input type="radio" name="payment-method" value="โอนผ่านธนาคาร">
+                    <span>โอนผ่านธนาคาร</span>
+                  </label>
+                </div>
+                <p id="payment-method-error" class="field-error"></p>
+              </fieldset>
+
+              <div class="mt-3">
+                <label for="payment-amount" class="form-label">ยอดที่ชำระ (บาท)</label>
+                <input id="payment-amount" class="form-control" type="number" min="0" step="1" inputmode="decimal">
+                <p id="payment-amount-error" class="field-error"></p>
+              </div>
+
+              <div class="mt-3">
+                <label for="payment-slip" class="form-label">แนบสลิปการชำระเงิน</label>
+                <p class="text-white-50 small mb-2">รองรับ PNG, JPG หรือ PDF ขนาดไม่เกิน 750 KB</p>
+                <input id="payment-slip" class="form-control" type="file" accept="image/png,image/jpeg,application/pdf">
+                <p id="payment-slip-error" class="field-error"></p>
+                <div id="payment-slip-preview" class="hidden mt-2"></div>
+              </div>
+
+              <p id="seats-error" class="field-error"></p>
+              <p id="booking-message" class="notice hidden mt-2" aria-live="polite"></p>
+
+              <button id="confirm-booking" type="submit" class="btn btn-gold w-100 rounded-3 py-3 mt-3">
+                ยืนยันการจอง
+              </button>
+            </form>
+          </section>
+        </div>
+
+        <!-- ===== ยืนยันการจองสำเร็จ ===== -->
+        <section id="booking-confirm" class="glass p-4 mt-4 hidden">
+          <div class="booking-confirm">
+            <h2 class="h5 text-white fw-bold mb-0">ส่งคำขอจองเรียบร้อยแล้ว</h2>
+            <dl>
+              <div><dt>เลขที่การจอง</dt><dd id="confirm-booking-id"></dd></div>
+              <div><dt>ผู้จอง</dt><dd id="confirm-name"></dd></div>
+              <div><dt>ที่นั่ง</dt><dd id="confirm-seats"></dd></div>
+              <div><dt>โซน</dt><dd id="confirm-zones"></dd></div>
+              <div><dt>ยอดรวม</dt><dd id="confirm-total"></dd></div>
+              <div><dt>สถานะ</dt><dd id="confirm-status"></dd></div>
+            </dl>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        ระบบจองตั๋วชมโขนไทย · <a href="admin.html">เข้าสู่ระบบแอดมิน</a>
+      </footer>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/seatmap.js"></script>
+  <script src="assets/js/booking.js"></script>
+</body>
+</html>

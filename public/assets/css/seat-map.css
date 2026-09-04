@@ -1,0 +1,49 @@
+/* ==========================================================================
+   seat-map.css — ผังที่นั่งทั้งหมดในเฟรมเดียว (VIP / ม่วง / เขียว / เหลือง)
+   ========================================================================== */
+
+.seat-map-frame { border: 1px solid var(--line); border-radius: 1rem; background: rgba(0, 0, 0, .22); padding: .5rem; }
+.seat-map-scroll { overflow-x: auto; padding: .3rem .15rem 1rem; }
+.seat-map { width: 100%; min-width: 780px; padding: 1rem; }
+
+.stage {
+  margin: 0 auto 1.5rem; max-width: 640px; padding: .65rem; text-align: center;
+  border-radius: 50% 50% 12px 12px; letter-spacing: .25em; font-weight: 800; color: #291a02;
+  background: linear-gradient(90deg, #8c5d10, #f2d16c, #8c5d10); box-shadow: 0 8px 0 #3e2605;
+}
+
+.seat-groups { display: grid; gap: 1.25rem; }
+.seat-tier { display: grid; grid-template-columns: 1fr 1.7fr 1fr; gap: .65rem; }
+.aisle-note { color: rgba(248, 215, 122, .55); font-size: .72rem; letter-spacing: .16em; text-align: center; margin: 0; }
+.aisle-col { display: flex; align-items: center; justify-content: center; min-height: 60px; }
+
+.zone-card { min-width: 0; overflow: hidden; border: 1px solid rgba(255, 255, 255, .12); border-radius: .75rem; background: rgba(255, 255, 255, .025); }
+.zone-title { padding: .42rem .5rem; font-size: .78rem; font-weight: 700; text-align: center; color: #fff1d5; }
+.zone-vip .zone-title { background: #b83239; }
+.zone-purple .zone-title { background: #8e58bf; }
+.zone-green .zone-title { background: #49a978; color: #082219; }
+.zone-yellow .zone-title { background: #e86f8a; color: #211700; }
+
+/* จุดสีบอกโซนในการ์ดราคา (ใช้แทนอิโมจิ) — สีเดียวกับแถบหัวโซนด้านบน */
+.zone-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
+.zone-vip .zone-dot { background: #b83239; }
+.zone-purple .zone-dot { background: #8e58bf; }
+.zone-green .zone-dot { background: #49a978; }
+.zone-yellow .zone-dot { background: #e86f8a; }
+
+.rows { display: flex; flex-direction: column; gap: .25rem; padding: .45rem; }
+.seat-row { display: flex; align-items: center; gap: 2px; }
+.row-label { width: 16px; flex: none; color: var(--gold-soft); font-size: .72rem; font-weight: 700; text-align: center; }
+.seat-run { display: flex; gap: 2px; flex-wrap: wrap; }
+
+.seat {
+  width: 19px; height: 20px; padding: 0; border: 1px solid rgba(255, 255, 255, .3); border-radius: 4px 4px 7px 7px;
+  background: var(--seat-available); color: #fff; cursor: pointer; font-size: 8px; line-height: 1; transition: .15s ease;
+}
+.seat:hover:not(:disabled) { transform: translateY(-2px); background: var(--seat-available-hover); }
+.seat.is-selected { border: 3px solid var(--gold-soft); background: #b82d34; box-shadow: 0 0 14px rgba(241, 205, 98, .55); }
+.seat.is-booked { background: var(--seat-booked); border-color: var(--seat-booked-border); color: #d5ffe9; cursor: not-allowed; font-weight: 900; font-size: 10px; }
+
+@media (max-width: 900px) {
+  .seat-map { min-width: 720px; }
+}
