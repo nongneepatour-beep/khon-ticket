@@ -24,6 +24,8 @@
   const submitBtn = document.getElementById("confirm-booking");
 
   const bookingConfirmEl = document.getElementById("booking-confirm");
+  const bookingTicketEl = document.getElementById("booking-ticket");
+  const saveTicketBtn = document.getElementById("save-ticket-image");
 
   let selectedSeats = new Set();
   let bookedSeats = Storage.getBookedSeats(); // เริ่มจาก cache ในเครื่องก่อน (แสดงผลได้ทันที)
@@ -181,6 +183,29 @@
     updateSummary();
   });
 
+  // บันทึกหลักฐานการจองเป็นรูปภาพ (PNG) เพื่อให้ผู้จองเก็บไว้แสดงกับเจ้าหน้าที่ตอนเช็คหน้างาน
+  saveTicketBtn.addEventListener("click", async () => {
+    if (typeof html2canvas !== "function") {
+      showBookingMessage("ไม่สามารถโหลดตัวช่วยบันทึกรูปภาพได้ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่", "error");
+      return;
+    }
+    saveTicketBtn.disabled = true;
+    saveTicketBtn.classList.add("disabled");
+    try {
+      const canvas = await html2canvas(bookingTicketEl, { backgroundColor: "#17140b", scale: 2 });
+      const bookingId = document.getElementById("confirm-booking-id").textContent.trim() || "booking";
+      const link = document.createElement("a");
+      link.download = `${bookingId}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } catch (_) {
+      showBookingMessage("บันทึกรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง", "error");
+    } finally {
+      saveTicketBtn.disabled = false;
+      saveTicketBtn.classList.remove("disabled");
+    }
+  });
+
   document.getElementById("scroll-to-seats")?.addEventListener("click", () =>
     document.getElementById("seat-section").scrollIntoView({ behavior: "smooth" })
   );
@@ -281,8 +306,10 @@
   }
 
   function showConfirmation(record, syncState) {
+    document.getElementById("confirm-show-info").textContent = `${SHOW_INFO.title} · ${SHOW_INFO.venue} · ${SHOW_INFO.datetime}`;
     document.getElementById("confirm-booking-id").textContent = record.booking_id;
     document.getElementById("confirm-name").textContent = `${record.first_name} ${record.last_name}`;
+    document.getElementById("confirm-phone").textContent = record.phone;
     document.getElementById("confirm-seats").textContent = record.seats.split("|").map(id => {
       const seat = SEAT_BY_ID.get(id);
       return seat ? `${seat.row}${seat.number}` : id;

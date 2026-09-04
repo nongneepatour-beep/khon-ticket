@@ -135,6 +135,7 @@ body {
 .booking-confirm dl { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem 1rem; margin: .75rem 0 0; }
 .booking-confirm dt { color: #bcae89; font-size: .78rem; }
 .booking-confirm dd { margin: 0; color: #fff4d6; font-size: .92rem; overflow-wrap: anywhere; }
+.ticket-id { font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 800; font-size: 1.1rem; color: var(--gold-soft); letter-spacing: .04em; white-space: nowrap; }
 
 /* ---------- Admin ---------- */
 .status-pill { display: inline-flex; align-items: center; border-radius: 999px; padding: .25rem .65rem; font-size: .78rem; font-weight: 700; }

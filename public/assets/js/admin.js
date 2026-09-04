@@ -17,6 +17,7 @@
   const logoutBtn = document.getElementById("logout-btn");
 
   const statusFilter = document.getElementById("status-filter");
+  const searchInput = document.getElementById("search-booking");
   const refreshBtn = document.getElementById("refresh-btn");
   const adminMessage = document.getElementById("admin-message");
   const pendingCountEl = document.getElementById("pending-count");
@@ -108,8 +109,10 @@
 
   function renderList() {
     const filter = statusFilter.value;
+    const searchTerm = searchInput.value.trim().toLowerCase();
     const sorted = [...records].sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
-    const visible = filter === "all" ? sorted : sorted.filter(r => r.booking_status === filter);
+    let visible = filter === "all" ? sorted : sorted.filter(r => r.booking_status === filter);
+    if (searchTerm) visible = visible.filter(r => String(r.booking_id || "").toLowerCase().includes(searchTerm));
     const pendingCount = sorted.filter(r => r.booking_status === "รอตรวจสอบการชำระเงิน").length;
     pendingCountEl.textContent = `${pendingCount} รายการ`;
 
@@ -217,6 +220,7 @@
   loginForm.addEventListener("submit", handleLogin);
   logoutBtn.addEventListener("click", handleLogout);
   statusFilter.addEventListener("change", renderList);
+  searchInput.addEventListener("input", renderList);
   refreshBtn.addEventListener("click", refreshList);
   approveBtn.addEventListener("click", () => updateStatus("อนุมัติแล้ว"));
   rejectBtn.addEventListener("click", () => updateStatus("ปฏิเสธแล้ว"));
