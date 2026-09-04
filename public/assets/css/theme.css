@@ -26,7 +26,7 @@
 }
 
 body {
-  font-family: "Sarabun", "Noto Sans Thai", Tahoma, sans-serif;
+  font-family: "Prompt", "Noto Sans Thai", Tahoma, sans-serif;
   background: var(--ink);
   color: var(--paper);
 }
@@ -88,10 +88,14 @@ body {
 .chip-selected { background: var(--seat-available); border: 3px solid var(--gold-soft); }
 
 .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .75rem; }
-.price-card { border-radius: .85rem; padding: .8rem .9rem; border: 1px solid rgba(255, 255, 255, .12); background: rgba(255, 255, 255, .03); transition: .2s ease; }
-.price-card:hover { transform: translateY(-2px); border-color: rgba(213, 168, 61, .4); background: rgba(255, 255, 255, .05); }
-.price-card .zone-name { display: flex; align-items: center; gap: .5rem; font-size: .85rem; font-weight: 700; }
-.price-card .zone-price { margin-top: .4rem; font-size: 1.3rem; font-weight: 800; color: var(--gold-soft); }
+.price-card {
+  overflow: hidden; border-radius: .85rem; border: 1px solid rgba(255, 255, 255, .12);
+  background: rgba(255, 255, 255, .03); transition: .2s ease;
+}
+.price-card:hover { transform: translateY(-2px); border-color: rgba(213, 168, 61, .4); }
+.price-card-band { padding: .55rem .7rem; font-size: .88rem; font-weight: 700; text-align: center; }
+.price-card-body { padding: .8rem .9rem .9rem; text-align: center; }
+.price-card .zone-price { font-size: 1.35rem; font-weight: 800; color: var(--gold-soft); }
 
 /* ---------- ฟอร์ม ---------- */
 .form-control, .form-select {
@@ -115,7 +119,7 @@ body {
 .notice-error { color: #ffd0cb; border: 1px solid rgba(255, 131, 121, .5); background: rgba(159, 38, 48, .18); }
 .hidden { display: none !important; }
 
-.summary-list { border-radius: .85rem; background: rgba(0, 0, 0, .25); border: 1px solid rgba(255, 255, 255, .1); max-height: 13rem; overflow-y: auto; }
+.summary-list { flex: 1 1 auto; min-height: 8rem; border-radius: .85rem; background: rgba(0, 0, 0, .25); border: 1px solid rgba(255, 255, 255, .1); overflow-y: auto; }
 .summary-list .row { display: flex; justify-content: space-between; gap: .75rem; padding: .5rem .75rem; margin: 0; border-bottom: 1px solid rgba(255, 255, 255, .08); font-size: .88rem; }
 .summary-list .empty { color: #bcae89; padding: 1rem; text-align: center; }
 .stat-box { border-radius: .85rem; padding: .75rem; background: rgba(0, 0, 0, .3); border: 1px solid rgba(255, 255, 255, .1); }

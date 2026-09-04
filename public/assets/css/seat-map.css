@@ -13,28 +13,39 @@
 }
 
 .seat-groups { display: grid; gap: 1.25rem; }
-.seat-tier { display: grid; grid-template-columns: 1fr 1.7fr 1fr; gap: .65rem; }
+.seat-tier { display: grid; grid-template-columns: minmax(min-content, 1fr) minmax(min-content, 1.7fr) minmax(min-content, 1fr); gap: .65rem; }
+.seat-tier-with-aisles { grid-template-columns: minmax(min-content, 1fr) 1.4rem minmax(min-content, 1.7fr) 1.4rem minmax(min-content, 1fr); }
 .aisle-note { color: rgba(248, 215, 122, .55); font-size: .72rem; letter-spacing: .16em; text-align: center; margin: 0; }
 .aisle-col { display: flex; align-items: center; justify-content: center; min-height: 60px; }
 
+/* ป้าย "ช่องทางเดิน" ระหว่างการ์ดโซน (VIP / เขียว / เหลือง ที่ไม่มีทางเดินกลางเป็นคอลัมน์อยู่แล้ว)
+   ตัวหนังสือเป็นแนวนอนปกติแล้วหมุน 90° ตามเข็มนาฬิกา ทำให้ขอบล่างของตัวหนังสือชี้ไปทางซ้ายของการ์ด */
+.aisle-divider {
+  display: flex; align-items: center; justify-content: center; overflow: visible;
+  border-left: 1px dashed rgba(213, 168, 61, .28);
+  border-right: 1px dashed rgba(213, 168, 61, .28);
+}
+.aisle-divider span {
+  display: inline-block; white-space: nowrap; transform: rotate(90deg);
+  color: rgba(248, 215, 122, .5); font-size: .68rem; font-weight: 600; letter-spacing: .2em;
+}
+
 .zone-card { min-width: 0; overflow: hidden; border: 1px solid rgba(255, 255, 255, .12); border-radius: .75rem; background: rgba(255, 255, 255, .025); }
 .zone-title { padding: .42rem .5rem; font-size: .78rem; font-weight: 700; text-align: center; color: #fff1d5; }
-.zone-vip .zone-title { background: #b83239; }
-.zone-purple .zone-title { background: #8e58bf; }
-.zone-green .zone-title { background: #49a978; color: #082219; }
-.zone-yellow .zone-title { background: #e86f8a; color: #211700; }
 
-/* จุดสีบอกโซนในการ์ดราคา (ใช้แทนอิโมจิ) — สีเดียวกับแถบหัวโซนด้านบน */
-.zone-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
-.zone-vip .zone-dot { background: #b83239; }
-.zone-purple .zone-dot { background: #8e58bf; }
-.zone-green .zone-dot { background: #49a978; }
-.zone-yellow .zone-dot { background: #e86f8a; }
+/* แถบสีของแต่ละประเภทโซน — ใช้ร่วมกันทั้งหัวโซนในผังที่นั่งและแถบในการ์ดราคา (แทนอิโมจิ) */
+.zone-vip .zone-title, .zone-vip .price-card-band { background: #b83239; color: #fff1d5; }
+.zone-purple .zone-title, .zone-purple .price-card-band { background: #8e58bf; color: #fff1d5; }
+.zone-green .zone-title, .zone-green .price-card-band { background: #49a978; color: #082219; }
+.zone-yellow .zone-title, .zone-yellow .price-card-band { background: #ffd500; color: #1a1300; }
+
+/* หัวการ์ดราคา (VIP / ธรรมดาสีม่วง) ใช้ตัวหนังสือสีดำแทนสีขาว อ่านง่ายกว่าบนพื้นสีนี้ */
+.zone-vip .price-card-band, .zone-purple .price-card-band { color: #000; }
 
 .rows { display: flex; flex-direction: column; gap: .25rem; padding: .45rem; }
-.seat-row { display: flex; align-items: center; gap: 2px; }
+.seat-row { display: flex; align-items: center; justify-content: center; gap: 2px; }
 .row-label { width: 16px; flex: none; color: var(--gold-soft); font-size: .72rem; font-weight: 700; text-align: center; }
-.seat-run { display: flex; gap: 2px; flex-wrap: wrap; }
+.seat-run { display: flex; gap: 2px; flex-wrap: nowrap; }
 
 .seat {
   width: 19px; height: 20px; padding: 0; border: 1px solid rgba(255, 255, 255, .3); border-radius: 4px 4px 7px 7px;

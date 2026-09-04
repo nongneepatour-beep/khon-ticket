@@ -26,13 +26,13 @@ const SeatMap = (() => {
         groups.appendChild(note);
       }
 
+      const zones = tierIds.map(id => SEAT_LAYOUT.find(z => z.id === id)).filter(Boolean);
+      const hasAisleZone = zones.some(zone => zone.type === "aisle");
+
       const tierEl = document.createElement("div");
-      tierEl.className = "seat-tier";
+      tierEl.className = hasAisleZone ? "seat-tier" : "seat-tier seat-tier-with-aisles";
 
-      tierIds.forEach(zoneId => {
-        const zone = SEAT_LAYOUT.find(z => z.id === zoneId);
-        if (!zone) return;
-
+      zones.forEach((zone, index) => {
         if (zone.type === "aisle") {
           const aisleCol = document.createElement("div");
           aisleCol.className = "aisle-col";
@@ -42,12 +42,27 @@ const SeatMap = (() => {
         }
 
         tierEl.appendChild(buildZoneCard(zone));
+
+        // แทรกป้าย "ช่องทางเดิน" แนวตั้งระหว่างการ์ดโซน เฉพาะแถวที่ไม่มีทางเดินกลางอยู่แล้ว (VIP/เขียว/เหลือง)
+        if (!hasAisleZone && index < zones.length - 1) {
+          tierEl.appendChild(buildAisleDivider());
+        }
       });
 
       groups.appendChild(tierEl);
     });
 
     container.appendChild(groups);
+  }
+
+  function buildAisleDivider() {
+    const divider = document.createElement("div");
+    divider.className = "aisle-divider";
+    divider.setAttribute("aria-hidden", "true");
+    const label = document.createElement("span");
+    label.textContent = "ช่องทางเดิน";
+    divider.appendChild(label);
+    return divider;
   }
 
   function buildZoneCard(zone) {
@@ -117,8 +132,10 @@ const SeatMap = (() => {
       const card = document.createElement("div");
       card.className = `price-card ${meta.className}`;
       card.innerHTML = `
-        <div class="zone-name"><span class="zone-dot" aria-hidden="true"></span>${meta.label}</div>
-        <div class="zone-price">${new Intl.NumberFormat("th-TH").format(PRICES[type])} บาท</div>`;
+        <div class="price-card-band">${meta.label}</div>
+        <div class="price-card-body">
+          <div class="zone-price">${new Intl.NumberFormat("th-TH").format(PRICES[type])} บาท</div>
+        </div>`;
       container.appendChild(card);
     });
   }
