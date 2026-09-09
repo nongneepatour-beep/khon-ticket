@@ -41,11 +41,11 @@
 /* แถบสีของแต่ละประเภทโซน — ใช้ร่วมกันทั้งหัวโซนในผังที่นั่งและแถบในการ์ดราคา (แทนอิโมจิ) */
 .zone-vip .zone-title, .zone-vip .price-card-band { background: #b83239; color: #fff1d5; }
 .zone-purple .zone-title, .zone-purple .price-card-band { background: #8e58bf; color: #fff1d5; }
-.zone-green .zone-title, .zone-green .price-card-band { background: #49a978; color: #082219; }
+.zone-green .zone-title, .zone-green .price-card-band { background: #8e58bf; color: #fff1d5; }
 .zone-yellow .zone-title, .zone-yellow .price-card-band { background: #ffd500; color: #1a1300; }
 
 /* หัวการ์ดราคา (VIP / ธรรมดาสีม่วง) ใช้ตัวหนังสือสีดำแทนสีขาว อ่านง่ายกว่าบนพื้นสีนี้ */
-.zone-vip .price-card-band, .zone-purple .price-card-band { color: #000; }
+.zone-vip .price-card-band, .zone-purple .price-card-band, .zone-green .price-card-band { color: #000; }
 
 .rows { display: flex; flex-direction: column; gap: .25rem; padding: .45rem; }
 .seat-row { display: flex; align-items: center; justify-content: center; gap: 2px; }

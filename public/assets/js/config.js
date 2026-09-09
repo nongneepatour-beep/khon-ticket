@@ -37,7 +37,7 @@ const PRICES = {
 const ZONE_META = {
   vip:    { label: "VIP",            className: "zone-vip" },
   purple: { label: "ธรรมดาสีม่วง",   className: "zone-purple" },
-  green:  { label: "ธรรมดาสีเขียว",  className: "zone-green" },
+  green:  { label: "ธรรมดาสีม่วง",   className: "zone-green" },
   yellow: { label: "ธรรมดาสีเหลือง", className: "zone-yellow" }
 };
 
@@ -55,7 +55,7 @@ const SEAT_LAYOUT = [
   { id: "purple-aisle", name: "ทางเดินกลาง",             type: "aisle",  rows: {} },
   { id: "purple-left",  name: "โซน C2 · ธรรมดาฝั่งซ้าย", type: "purple", rows: { E: 12, F: 13, G: 13, H: 14, I: 14 } },
 
-  // ---------- โซนธรรมดาสีเขียว ----------
+  // ---------- โซนธรรมดาสีม่วง (A3/B3/C3) — type/id ยังใช้คำว่า "green" ในโค้ดเป็นชื่อภายในเท่านั้น ----------
   { id: "green-right",  name: "โซน A3 · ธรรมดาฝั่งขวา", type: "green", rows: { J: 17, K: 17, L: 18, M: 18 } },
   { id: "green-center", name: "โซน B3 · ธรรมดากลาง",    type: "green", rows: { J: 19, K: 19, L: 20, M: 20 } },
   { id: "green-left",   name: "โซน C3 · ธรรมดาฝั่งซ้าย", type: "green", rows: { J: 16, K: 16, L: 17, M: 17 } },
